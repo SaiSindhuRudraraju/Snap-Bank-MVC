@@ -1,0 +1,128 @@
+﻿
+html, body {
+    width: 100%;
+    height: 100%;
+    background-image: url(../Images/back5.jpg);
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    min-width: 50px;
+    max-width: 100px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    justify-content: space-between;
+}
+
+.wrap-div {
+    margin: 0;
+    height: 100%;
+}
+
+.main-card {
+    margin-left: 10%;
+    background-color: #EEEEEE;
+    margin-right: 10%;
+}
+
+.user-image {
+    width: 6rem;
+    padding-bottom: 2rem;
+}
+
+.sidebar img {
+    width: 80px;
+    margin: 5px;
+}
+
+.sidebar .buttons {
+    bottom: 1rem;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.logoText {
+    font-size: x-large;
+    font-weight: bolder;
+    margin: 5%;
+    text-align: center;
+}
+
+.sidebar a.active {
+    text-align: center;
+    color: white;
+}
+
+.sidebar a img {
+    width: 2rem;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 5rem;
+    }
+
+        .sidebar .logoText {
+            font-size: large;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .sidebar .buttons {
+            margin-top: 5px;
+            padding: 0;
+            bottom: unset;
+            right: 0;
+        }
+
+            .sidebar .buttons a {
+                padding: 0;
+            }
+
+                .sidebar .buttons a img {
+                    width: 2.5rem;
+                    height: auto;
+                }
+
+        .sidebar img {
+            height: 3rem;
+            width: auto;
+            margin: 10px;
+        }
+
+        .sidebar a {
+            float: left;
+        }
+
+    div.content {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+}

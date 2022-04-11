@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "AccountActivity";
+}
+@section AddToHead
+{
+    <link href="@Url.Content("~/Content/AccountActivity.css")" rel="stylesheet" type="text/css" />
+}
+<div class="row">
+    <div class="col-1 col-sm-1 col-md-1">
+        <div class="sidebar">
+            <div class="ImageContainer">
+                <img src="~/images/family icon.png" alt="family image" />
+                <div class="logoText">SNAP BANK</div>
+            </div>
+            <div class="buttons">
+                <a class="active" href="/Snap/Home">
+                    <img src="~/Images/home.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Support/">
+                    <img src="~/Images/support.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Index">
+                    <img src="~/Images/log-out.png" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-11 col-md-11 col-sm-11 mt-5">
+        <div class="card main-card border-2" style="background-color: #f1f1f1;">
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <div class="d-flex justify-content-right mt-5 h2">
+                        ACCOUNT ACTIVITY
+                    </div>
+                    <div class="d-flex justify-content-center mt-5 h4">
+                        <input type="radio" class="m-2" name="account" id="account">
+                        SAVINGS ACCOUNT
+                        <input type="radio" class="m-2" name="account" id="account">
+                        CURRENT ACCOUNT
+                    </div>
+                    <div class="d-flex justify-content-around mt-5 row">
+                        <div class="col-4">
+                            <p class="h5">CLOSING BALANCE: <b> £31,142</b></p>
+                        </div>
+                        <div class="col-8 row">
+                            <div class="col-3" style="margin-left: 0%; padding-left:0%;">
+                                <select class="form-select" onchange="hideShowRangePicker(this.value)">
+                                    <option selected>Choose Dates </option>
+                                    <option value="last week">last week</option>
+                                    <option value="2">last 2 weeks</option>
+                                    <option value="3">last month</option>
+                                    <option value="4">Custom Date</option>
+                                </select>
+                            </div>
+                            <div class="datePicker col-7" id="dataPicker" style="display: none;">
+                                <div class="row">
+                                    <!-- <label class="col-2" for="toDate" style="margin-right: 0%;padding-right: 0%;">From</label> -->
+                                    <input class="col-5 form-control form-control-md" style="width: 175px" type="date" name="toDate" />
+                                    <label class="col-2">
+                                        <img style="width: 40px;" src="~/Images/double-arrow.png" alt="">
+                                    </label>
+                                    <input class="col-5 form-control form-control-md" style="width: 175px;" type="date" name="toDate" />
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <button class="btn btn-outline-primary" type="button">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered mt-5">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">DISCRIPTION</th>
+                                <th scope="col">WITHDRAWLS</th>
+                                <th scope="col">DEPOSITS</th>
+                                <th scope="col">BALANCE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">14-03-2022</th>
+                                <td>JONES</td>
+                                <td></td>
+                                <td>+£500</td>
+                                <td>+£31000</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">14-03-2022</th>
+                                <td>STEVE</td>
+                                <td>+£30,500</td>
+                                <td> </td>
+                                <td>+£500</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">14-03-2022</th>
+                                <td>JAMES</td>
+                                <td></td>
+                                <td>+£500</td>
+                                <td>+£30,500</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">14-03-2022</th>
+                                <td>ALEX</td>
+                                <td></td>
+                                <td>+£1500</td>
+                                <td>+£30,500</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary" style="padding-left: 2.5rem; padding-right: 2.5rem">
+                        PRINT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function hideShowRangePicker(e) {
+        //dataPicker
+        if (e == 4) {
+            document.getElementById("dataPicker").style.display = "block";
+        } else {
+            document.getElementById("dataPicker").style.display = "none";
+        }
+    }
+</script>

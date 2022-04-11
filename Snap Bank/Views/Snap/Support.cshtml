@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+}
+
+@section AddToHead
+{
+    <link href="@Url.Content("~/Content/Support.css")" rel="stylesheet" type="text/css" />
+}
+
+
+<div class="row">
+    <div class="col-1 col-sm-1 col-md-1">
+        <div class="sidebar">
+            <div class="imageContainer">
+                <img src="~/Images/family icon.png" alt="family image" />
+                <div class="logoText">SNAP BANK</div>
+            </div>
+
+            <div class="buttons">
+                <a class="active" href="/Snap/Home/">
+                    <img src="~/Images/home.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Index/">
+                    <img src="~/Images/log-out.png" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-11 col-md-11 col-sm-11 mt-5">
+        <div class="pt-3 wrap-div">
+            <div class="card main-card" style="background-color: #f1f1f1;">
+                <div class="card-body ">
+                    <div class="text-center">
+                        <div class="d-flex justify-content-center mt-5 h2">
+                            SERVICE IS OUR MOTO
+                        </div>
+                        <div class="d-flex justify-content-center mt-5 h4">
+                            Our dedicated team is always there to help you 24/7
+                        </div>
+                        <div class="d-flex justify-content-around mt-5">
+                            <p class="h3">You can Email your issue to:</p>
+                            <p class="h3"><a href="mailto:someone@example.com">snapbank.chat@gmail.com</a></p>
+                        </div>
+                        <div class="d-flex justify-content-around m-5">
+                            <p class="h3">You can call us:</p>
+                            <p class="h3">07721470777</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

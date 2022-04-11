@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+@section AddToHead
+{
+    <link href="@Url.Content("~/Content/Home.css")" rel="stylesheet" type="text/css" />
+}
+<div class="row" style="width: 100%;">
+    <div class="col-1 col-sm-1 col-md-1">
+        <div class="sidebar">
+            <div class="imageContainer">
+                <img src="~/Images/family icon.png" alt="family image" />
+                <div class="logoText">SNAP BANK</div>
+            </div>
+            <div class="buttons">
+                <a class="active" href="/Snap/Settings">
+                    <img src="~/Images/settings.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Support">
+                    <img src="~/Images/support.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Index">
+                    <img src="~/Images/log-out.png" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-11 col-md-11 col-sm-11" style="padding: 3% 5% 2% 5%;">
+        <div class="wrap-div">
+            <div class="card border-0 shadow main-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col d-flex justify-content-left">
+                            <div class="container-fluid p-3 my-3">
+                                <div class="height-100 d-flex justify-content-center align-items-center">
+                                    <div class="card debitcard p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6>CURRENT ACCOUNT</h6>
+                                            <h2>SNAP</h2>
+                                        </div>
+                                        <div class="px-2 number mt-3 d-flex justify-content-between align-items-center">
+                                            <span>1234</span> <span>5678</span> <span>8910</span>
+                                            <span>1112</span>
+                                        </div>
+                                        <div class="p-4 card-border mt-4">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="cardholder">Card Holder</span>
+                                                <span class="expires">Expires</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="name">CHITIMILLA PRATEEK</span>
+                                                <span class="date">10/20</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-left">
+                            <div class="container-fluid p-3 my-3">
+                                <div class="height-100 d-flex justify-content-center align-items-center">
+                                    <div class="card debitcard p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6>SAVINGS ACCOUNT</h6>
+                                            <h2>SNAP</h2>
+                                        </div>
+                                        <div class="px-2 number mt-3 d-flex justify-content-between align-items-center">
+                                            <span>1234</span> <span>5678</span> <span>8910</span>
+                                            <span>1112</span>
+                                        </div>
+                                        <div class="p-4 card-border mt-4">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="cardholder">Card Holder</span>
+                                                <span class="expires">Expires</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="name">CHITIMILLA PRATEEK</span>
+                                                <span class="date">10/20</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sd-12">
+                            <div class="card m-5 border-3 main-card" onclick="location.href='/Snap/AccountActivity/';"
+                                 style="cursor: pointer">
+                                <div class="card-body">
+                                    <div class="text-container">
+                                        <div class="d-flex justify-content-center mt-3 mb-5">
+                                            <h3>ACCOUNT ACTIVITY</h3>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <h4>STEVE</h4>
+                                            <h4>£500</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <h4>SANJAY</h4>
+                                            <h4>£100</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <h4>ALEX</h4>
+                                            <h4>£1500</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <h4>JAMES</h4>
+                                            <h4>£700</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sd-12 d-flex justify-content-center">
+                            <div class="card border-3 main-card" style="cursor: pointer;margin: 12% 0%;padding: 0% 15%;">
+                                <div class="card-body" onclick="location.href='/Snap/FundTransfer/';">
+                                    <div class="text-container">
+                                        <div class="d-flex justify-content-center mt-3 mb-5">
+                                            <p class="h4">SEND MONEY</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">STEVE</p>
+                                            <p class="h6">£500</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">SANJAY</p>
+                                            <p class="h6">£100</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">ALEX</p>
+                                            <p class="h6">1£500</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">JAMES</p>
+                                            <p class="h6">£700</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sd-12 d-flex justify-content-center">
+                            <div class="card border-3 main-card" style="cursor: pointer;margin: 12% 0%;padding: 0% 15%;">
+                                <div class="card-body">
+                                    <div class="text-container">
+                                        <div class="d-flex justify-content-center mt-3 mb-5">
+                                            <p class="h5">RECEIVED MONEY</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">STEVE</p>
+                                            <p class="h6">£500</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">SANJAY</p>
+                                            <p class="h6">£100</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">ALEX</p>
+                                            <p class="h6">£1500</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around m-4">
+                                            <p class="h6">JAMES</p>
+                                            <p class="h6">£700</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+.page {
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+}
+
+.page-row {
+    margin: 0;
+    height: 100%;
+}
+
+.login-div {
+    height: 100%;
+    background-color: #eeeeee;
+    padding: 6.8% 8% 0% 8%;
+}
+
+.imageContainer img {
+    margin-top: 5rem;
+    width: 100%;
+}
+
+@media screen and (max-width: 765px) {
+    .immageContainer {
+    }
+
+    .imageContainer img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+        width: 70%;
+    }
+}

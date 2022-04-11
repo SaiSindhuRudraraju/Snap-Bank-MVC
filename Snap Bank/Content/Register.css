@@ -1,0 +1,18 @@
+﻿html,
+body {
+    margin: 0;
+    height: 100%;
+    background-image: url(../Images/back5.jpg);
+}
+
+.wrap-div {
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
+}
+
+.main-card {
+    margin-left: 8%;
+    background-color: #eeeeee;
+    margin-right: 8%;
+}

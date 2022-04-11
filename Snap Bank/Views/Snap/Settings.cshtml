@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Support";
+}
+
+@section AddToHead
+{
+    <link href="@Url.Content("~/Content/Settings.css")" rel="stylesheet" type="text/css" />
+}
+
+<div class="row d-flex">
+    <div class="col-1 col-sm-1 col-md-1">
+        <div class="sidebar">
+            <div class="imageContainer">
+                <img src="~/Images/family icon.png" alt="family image" />
+                <div class="logoText">SNAP BANK</div>
+            </div>
+            <div class="buttons">
+                <a class="active" href="/Snap/Home">
+                    <img src="~/Images/home.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Support/">
+                    <img src="~/Images/support.png" alt="" />
+                </a>
+                <a class="active" href="/Snap/Index/">
+                    <img src="~/Images/log-out.png" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-11 col-md-11 col-sm-11" style="padding: 3% 5% 2% 5%;">
+        <div class="pt-3 wrap-div">
+            <div class="card border-0 shadow main-card">
+                <div class="card border-0" style="background-color: #f1f1f1;">
+                    <div class="card-body">
+                        <div class="text-center mb-5 mt-5">
+                            <img class="user-image" src="~/Images/user.png" alt="" />
+                            <h2>USER NAME</h2>
+                        </div>
+
+                        <form action="./4_ForgetPassword.html">
+                            <div class="m-4">
+                                <label for="floatingTextarea">Username</label>
+                                <input type="text" name="" id="" class="form-control mt-1" />
+                            </div>
+                            <div class="m-4">
+                                <label for="floatingTextarea">Password</label>
+                                <input type="password" name="" id="" class="form-control mt-1" />
+                            </div>
+
+                            <div class="d-flex flex-row-reverse">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary mx-5">
+                                        Change password
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="m-4">
+                                <label for="floatingTextarea">Email Id</label>
+                                <input type="email" name="" id="" class="form-control mt-1" />
+                            </div>
+                            <div class="m-4">
+                                <label for="floatingTextarea"> Phone number</label>
+                                <input type="number" name="" id="" class="form-control mt-1" />
+                            </div>
+
+                            <div class="text-center mt-4 mb-2 d-flex flex-row-reverse mx-5">
+                                <button class="btn btn-primary mb-3">change details</button>
+                            </div>
+                            <div class="text-center mt-4 mb-2 mx-2">
+                                <button class="btn btn-secondary mb-3">Add Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

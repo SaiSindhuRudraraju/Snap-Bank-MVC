@@ -1,0 +1,145 @@
+﻿
+@model Snap_Bank.ViewModel.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+@section AddToHead
+{
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <link href="@Url.Content("~/Content/Register.css")" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+}
+
+<div class="pt-3 wrap-div">
+    <div class="card border-0 shadow main-card">
+        <div class="card-body">
+            <div class="my-1" style="justify-content: center">
+                <h4 class="text-center fw-bold mx-5 mb-4 mt-3">Register your account</h4>
+            </div>
+            <div class="mx-0 px-5">
+                @using (Html.BeginForm("Register", "Snap", FormMethod.Post))
+                {
+                    <div class="row">
+                        <h6 style="color: brown;">Personal Details:</h6>
+                        <div class="row">
+                            <div class="col-md-6 col-sd-12">
+                                <label>First Name</label>
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6 col-sd-12">
+                                <label>Last Name</label>
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sd-12">
+                                <label>Date of Birth</label>
+                                @Html.LabelFor(model => model.DateOfBirth)
+                                @Html.TextBoxFor(model => model.DateOfBirth, new { type = "date", @class = "form-control" })
+                            </div>
+                            <div class="col-md-6 col-sd-12">
+                                <label>Gender</label>
+                                <div style="margin: 0; padding: 0">
+                                    @Html.DropDownListFor(model => model.Gender, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.Gender))), "Select Gender", new { htmlAttributes = new { @class = "form-select form-control form-control-md" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sd-12">
+                                <label>Email</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6 col-sd-12">
+                                <label>Mobile Number</label>
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="padding-left: 10%; padding-right: 10%">
+                        <hr />
+                    </div>
+                    <div class="row">
+                        <h6 style="color: brown;">Account Details:</h6>
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-sd-12">
+                                <label>Sort Code</label>
+                                <div class="row">
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.SortCode1, new { htmlAttributes = new { type = "number", @readonly = "readonly", @class = "form-control form-control-md" } })
+                                        @Html.ValidationMessageFor(model => model.SortCode1, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.SortCode2, new { htmlAttributes = new { type = "number", @readonly = "readonly", @class = "form-control form-control-md" } })
+                                        @Html.ValidationMessageFor(model => model.SortCode2, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.SortCode3, new { htmlAttributes = new { type = "number", @readonly = "readonly", @class = "form-control form-control-md" } })
+                                        @Html.ValidationMessageFor(model => model.SortCode3, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 col-md-2 col-sd-12 mt-4">
+                                @Html.DropDownListFor(model => model.AccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Select Account Type", new { htmlAttributes = new { @class = "form-select form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-md-6 col-sd-12">
+                                <label>Account Number</label>
+                                @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { type = "number", @readonly = "readonly", @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="padding-left: 10%; padding-right: 10%">
+                        <hr />
+                    </div>
+                    <div class="row">
+                        <h6 style="color: brown;">Login Details:</h6>
+                        <div class="row">
+                            <div class="col-md-6  col-sd-12">
+                                <label>Username</label>
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3 col-sd-12">
+                                <label>Password</label>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3 col-sd-12">
+                                <label>Confirm Password</label>
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 col-sd-12">
+                                <label>Pin</label>
+                                @Html.EditorFor(model => model.Pin, new { htmlAttributes = new { type = "number", @maxlength = 4, @class = "form-control form-control-md" } })
+                                @Html.ValidationMessageFor(model => model.Pin, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-9">
+                                <button class="btn btn-primary" style="
+                                    padding-left: 2.5rem;
+                                    padding-right: 2.5rem;
+                                    float: right;
+                                    margin-top: 20px;
+                                  ">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
