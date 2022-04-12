@@ -213,12 +213,9 @@
     <Compile Include="Services\SecurityQuestionsService.cs" />
     <Compile Include="Services\TransactionsService.cs" />
     <Compile Include="SnapDbContext.cs" />
+    <Compile Include="ViewModel\FundTransferViewModel.cs" />
     <Compile Include="ViewModel\QuestionsViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelUnwanted\AccountViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelUnwanted\PersonalDetailsViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelUnwanted\SecurityQuestionsViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelUnwanted\TransactionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

@@ -23,6 +23,8 @@ namespace Snap_Bank.ViewModel
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Please Enter Phone")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+                   ErrorMessage = "Entered phone format is not valid.")]
         public String Phone { get; set; }
         public int SortCode1 { get; set; }
         public int SortCode2 { get; set; }

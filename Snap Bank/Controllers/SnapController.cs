@@ -17,7 +17,7 @@ namespace Snap_Bank.Controllers
         ISecurityQuestionsService securityQuestionsService;
         ITransactionsService transactionsService;
 
-        public SnapController(IAccountTableService _accountTableService, IPersonalDetailsService _personalDetailsService,ISecurityQuestionsService _securityQuestionsService, ITransactionsService _transactionsService)
+        public SnapController(IAccountTableService _accountTableService, IPersonalDetailsService _personalDetailsService, ISecurityQuestionsService _securityQuestionsService, ITransactionsService _transactionsService)
         {
             accountTableService = _accountTableService;
             personalDetailsService = _personalDetailsService;
@@ -79,7 +79,7 @@ namespace Snap_Bank.Controllers
                 personalDetailsService.Save(viewModel);
                 securityQuestionsService.Save(viewModel);
             }
-            return View(questionsViewModel);
+            return View("Home");
         }
 
         public ActionResult ForgetPassword()
@@ -104,6 +104,9 @@ namespace Snap_Bank.Controllers
         }
         public ActionResult FundTransfer()
         {
+            FundTransferViewModel fundTransferViewModel = new FundTransferViewModel();
+            fundTransferViewModel.selfAccountViewModel = new SelfAccountTransferViewModel();
+            fundTransferViewModel.differentAccountTransferModel = new DifferentAccountTransferModel();
             return View();
         }
     }
