@@ -67,10 +67,13 @@
                             <div class="text-center mt-4 mb-2 d-flex flex-row-reverse mx-5">
                                 <button class="btn btn-primary mb-3">change details</button>
                             </div>
-                            <div class="text-center mt-4 mb-2 mx-2">
-                                <button class="btn btn-secondary mb-3">Add Account</button>
-                            </div>
                         </form>
+                        @using (Html.BeginForm("AddSavingsAccount", "snap", FormMethod.Post))
+                        {
+                            <div class="text-center mt-4 mb-2 mx-2">
+                                <button type="submit" class="btn btn-secondary mb-3">Add Account</button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

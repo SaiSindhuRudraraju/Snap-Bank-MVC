@@ -19,7 +19,6 @@ namespace Snap_Bank.Services
             accountTable = new AccountTable();
             snapDbContext = new SnapDbContext();
         }
-
         public IEnumerable<AccountTable> Get()
         {
             return snapDbContext.AccountTables.ToList();
@@ -28,6 +27,7 @@ namespace Snap_Bank.Services
         public bool Save(RegisterViewModel registerViewModel)
         {
             accountTable = map.MapRegisterViewModelToAccountTable(registerViewModel, accountTable);
+
             using (var dbContext = new SnapDbContext())
             {
                 dbContext.AccountTables.Add(accountTable);

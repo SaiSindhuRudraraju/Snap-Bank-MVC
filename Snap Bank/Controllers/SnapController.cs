@@ -24,6 +24,7 @@ namespace Snap_Bank.Controllers
             securityQuestionsService = _securityQuestionsService;
             transactionsService = _transactionsService;
         }
+
         // GET: Snap
         public ActionResult Index()
         {
@@ -42,6 +43,7 @@ namespace Snap_Bank.Controllers
             registerViewModel.SortCode1 = 12;
             registerViewModel.SortCode2 = 93;
             registerViewModel.SortCode3 = 64;
+            registerViewModel.AccountType = "Current Account";
             return View(registerViewModel);
         }
         [HttpPost]
@@ -55,12 +57,6 @@ namespace Snap_Bank.Controllers
             }
             return View(registerViewModel);
         }
-
-        public ActionResult Home()
-        {
-            return View();
-        }
-
         public ActionResult Questions()
         {
             return View(new QuestionsViewModel());
@@ -75,13 +71,56 @@ namespace Snap_Bank.Controllers
                 viewModel.SecurityQuestion2 = questionsViewModel.SecurityQuestion2.ToString();
                 viewModel.SecurityQuestion3 = questionsViewModel.SecurityQuestion3.ToString();
                 //Save to DB
+
                 accountTableService.Save(viewModel);
                 personalDetailsService.Save(viewModel);
                 securityQuestionsService.Save(viewModel);
             }
             return View("Home");
         }
+        public ActionResult FundTransfer()
+        {
+            FundTransferViewModel fundTransferViewModel = new FundTransferViewModel();
+            fundTransferViewModel.selfAccountViewModel = new SelfAccountTransferViewModel();
+            fundTransferViewModel.differentAccountTransferModel = new DifferentAccountTransferModel();
 
+            fundTransferViewModel.differentAccountTransferModel.sortcode1 =12;
+            fundTransferViewModel.differentAccountTransferModel.sortcode2 =93;
+            fundTransferViewModel.differentAccountTransferModel.sortcode3 =64;
+            return View(fundTransferViewModel);
+        }
+        [HttpPost]
+        public ActionResult SelfFundTransfer(FundTransferViewModel fundTransferViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return Redirect("PaymentSuccess");
+            }
+            return View(fundTransferViewModel);
+        }
+        [HttpPost]
+        public ActionResult DifferentAccounFundTransfer(FundTransferViewModel fundTransferViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return Redirect("PaymentSuccess");
+            }
+            return View(fundTransferViewModel);
+        }
+        public ActionResult Settings()
+        {
+            //get detailes of user and set it to the input feilds in setting feild
+            return View(); 
+        }
+        public ActionResult AddSavingsAccount()
+        {
+            //get personal detailes of user and set it to model
+            return View("Register");
+        }
+        public ActionResult Home()
+        {
+            return View();
+        }
         public ActionResult ForgetPassword()
         {
             return View();
@@ -90,10 +129,7 @@ namespace Snap_Bank.Controllers
         {
             return View();
         }
-        public ActionResult Settings()
-        {
-            return View();
-        }
+
         public ActionResult AccountActivity()
         {
             return View();
@@ -102,12 +138,6 @@ namespace Snap_Bank.Controllers
         {
             return View();
         }
-        public ActionResult FundTransfer()
-        {
-            FundTransferViewModel fundTransferViewModel = new FundTransferViewModel();
-            fundTransferViewModel.selfAccountViewModel = new SelfAccountTransferViewModel();
-            fundTransferViewModel.differentAccountTransferModel = new DifferentAccountTransferModel();
-            return View();
-        }
+
     }
 }

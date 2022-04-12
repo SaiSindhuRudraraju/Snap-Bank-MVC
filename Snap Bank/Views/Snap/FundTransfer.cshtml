@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="card mt-5 p-3" style="background-color: #f1f1f1;">
-                        @using (Html.BeginForm("Register", "Snap", FormMethod.Post))
+                        @using (Html.BeginForm("SelfFundTransfer", "Snap", FormMethod.Post))
                         {
                             <div class="d-flex justify-content-right mt-5 h5 mb-3">
                                 SAME ACCOUNT TRANSFER
@@ -47,30 +47,20 @@
                                 <div class="col-12 col-md-12 col-sd-12">
                                     <span style="font-weight: bold; color: brown; margin-top: 10px">From</span>
                                     <div class="mt-0 mb-3">
-                                        @*<select class="form-select" onchange="hideShowRangePicker(this.value)">
-                                                <option selected>Choose Account Type</option>
-                                                <option value="Savings Account">Savings Account</option>
-                                                <option value="Current Account">Current Account</option>
-                                            </select>*@
-                                        @Html.DropDownListFor(model => model.selfAccountViewModel.FromAccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Choose Account Type", new { @class = "form-select form-control form-control-md" } )
+                                        @Html.DropDownListFor(model => model.selfAccountViewModel.FromAccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Choose Account Type", new { @class = "form-select form-control form-control-md" })
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-sd-12">
                                     <span style="font-weight: bold; color: brown; margin-top: 10px">To Account</span>
                                     <div class="mt-0">
-                                        @*<select class="form-select" onchange="hideShowRangePicker(this.value)">
-                                                <option selected>Choose Account Type</option>
-                                                <option value="Savings Account">Savings Account</option>
-                                                <option value="Current Account">Current Account</option>
-                                            </select>*@
-                                        @Html.DropDownListFor(model => model.selfAccountViewModel.ToAccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Choose Account Type",  new { @class = "form-select form-control form-control-md" } )
+                                        @Html.DropDownListFor(model => model.selfAccountViewModel.ToAccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Choose Account Type", new { @class = "form-select form-control form-control-md" })
 
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-sd-12">
                                     <div class="mt-3">
                                         <span style="font-weight: bold; color: brown; margin-top: 10px">Enter Amount</span>
-                                        @Html.EditorFor(model => model.selfAccountViewModel.AmountToTransfer, new { htmlAttributes = new { type = "", @maxlength = 4, @class = "form-control form-control-md" } })
+                                        @Html.EditorFor(model => model.selfAccountViewModel.AmountToTransfer, new { htmlAttributes = new { type = "Number", @class = "form-control form-control-md" } })
                                         @Html.ValidationMessageFor(model => model.selfAccountViewModel.AmountToTransfer, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -87,35 +77,33 @@
                 </div>
                 <div class="col m-5">
                     <div class="card" style="background-color: #f1f1f1;">
-                        @using (Html.BeginForm("Register", "Snap", FormMethod.Post))
+                        @using (Html.BeginForm("DifferentAccounFundTransfer", "Snap", FormMethod.Post))
                         {
                             <div class="card-body">
-                                <div class="d-flex justify-content-right mt-4 h5 mb-3">
+                                <div class="d-flex justify-content-right mt-1 h5 mb-3">
                                     DIFFERENT ACCOUNT TRANSFER
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <span style="font-weight: bold; color: brown; margin-top: 10px">From</span>
                                         <div class="mt-0 mb-3">
-
-                                            @*<select class="form-select" onchange="hideShowRangePicker(this.value)">
-                                                    <option selected>Choose Account Type</option>
-                                                    <option value="Savings Account">Savings Account</option>
-                                                    <option value="Current Account">Current Account</option>
-                                                </select>*@
-                                            @Html.DropDownListFor(model => model.differentAccountTransferModel.FromAccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Choose Account Type",new { @class = "form-select form-control form-control-md" } )
+                                            @Html.DropDownListFor(model => model.differentAccountTransferModel.FromAccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Choose Account Type", new { @class = "form-select form-control form-control-md" })
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <span style="font-weight: bold; color: brown; margin-top: 10px">To Country</span>
                                         <div class="mt-0">
-                                            @*<select class="form-select" onchange="hideShowRangePicker(this.value)">
-                                                    <option selected>Select Country </option>
-                                                    <option value="Savings Account">United Kingdom</option>
-                                                    <option value="Current Account">Europe</option>
-                                                    <option value="Current Account">United States of America</option>
-                                                </select>*@
-                                            @Html.DropDownListFor(model => model.differentAccountTransferModel.CountryName, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.CountryName))), "Choose Country",  new { @class = "form-select form-control form-control-md" } )
+                                            @Html.DropDownListFor(model => model.differentAccountTransferModel.CountryName, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.CountryName))), "Choose Country", new { @onchange = "setConversionRate(this.value)", @class = "form-select form-control form-control-md" })
+                                            <script>
+                                                function setConversionRate(selected) {
+                                                    if (selected == "UnitedStatesOfAmerica")
+                                                        document.getElementById("conversionRate").value = 1.30;
+                                                    else if (selected == "UnitedKingdom")
+                                                        document.getElementById("conversionRate").value = 1;
+                                                    else if (selected == "Europe")
+                                                        document.getElementById("conversionRate").value = 1.20;
+                                                }
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -127,25 +115,24 @@
                                         <label>Sort Code</label>
                                         <div class="row">
                                             <div class="col">
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.sortcode1, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.sortcode1, new { htmlAttributes = new { Type = "text", @readonly = "readonly", @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.sortcode1, "", new { @class = "text-danger" })
-                                             </div>
-                                            -
+                                            </div>
+
                                             <div class="col">
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.sortcode2, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.sortcode2, new { htmlAttributes = new { Type = "text", @readonly = "readonly", @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.sortcode2, "", new { @class = "text-danger" })
                                             </div>
-                                            -
+
                                             <div class="col">
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.sortcode3, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.sortcode3, new { htmlAttributes = new { Type = "text", @readonly = "readonly", @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.sortcode3, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="mt-2">
+                                        <div class="">
                                             <label for="floatingTextarea">Enter Account Number</label>
-                                            @*<input type="text" name="" id="" class="form-control" />*@
                                             @Html.EditorFor(model => model.differentAccountTransferModel.AccountNumber, new { htmlAttributes = new { @class = "form-control form-control-md" } })
                                             @Html.ValidationMessageFor(model => model.differentAccountTransferModel.AccountNumber, "", new { @class = "text-danger" })
                                         </div>
@@ -155,7 +142,6 @@
                                     <div class="col">
                                         <div class="mt-2">
                                             <label for="floatingTextarea">Enter Account Holder Name : </label>
-                                            @*<input type="text" name="" id="" class="form-control" />*@
                                             @Html.EditorFor(model => model.differentAccountTransferModel.AccountHolder, new { htmlAttributes = new { @class = "form-control form-control-md" } })
                                             @Html.ValidationMessageFor(model => model.differentAccountTransferModel.AccountHolder, "", new { @class = "text-danger" })
                                         </div>
@@ -163,7 +149,6 @@
                                     <div class="col">
                                         <div class="mt-2">
                                             <label for="floatingTextarea">Bank Name : </label>
-                                            @*<input type="text" name="" id="" class="form-control" />*@
                                             @Html.EditorFor(model => model.differentAccountTransferModel.BankName, new { htmlAttributes = new { @class = "form-control form-control-md" } })
                                             @Html.ValidationMessageFor(model => model.differentAccountTransferModel.BankName, "", new { @class = "text-danger" })
                                         </div>
@@ -177,16 +162,22 @@
                                         <div class="col">
                                             <div class="mt-3 mb-3">
                                                 <label for="floatingTextarea">Enter Amount in GBP </label>
-                                                @*<input type="text" name="" id="" class="form-control" />*@
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.AmountToTransfer, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.AmountToTransfer, new { htmlAttributes = new { @id = "Amount", @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.AmountToTransfer, "", new { @class = "text-danger" })
+                                                <script>
+                                                    document.getElementById('Amount').addEventListener('input', updateValues);
+                                                    function updateValues(e) {
+                                                        var conversionRate = document.getElementById('conversionRate').value;
+                                                        document.getElementById('TotalAmount').value = e.target.value * conversionRate;
+                                                    }
+                                                </script>
                                             </div>
-                                        </div>  
+                                        </div>
                                         <div class="col">
                                             <div class="mt-0">
                                                 <label for="floatingTextarea" style="font-size:smaller">Transfer Amount in GBP / EUR / DOLLARS</label>
-                                                @*<input type="text" name="" id="" class="form-control" />*@
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.ConvertedAmount, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.ConvertedAmount, new { htmlAttributes = new { @id = "TotalAmount", @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.ConvertedAmount, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -201,8 +192,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col col-sd-12 mt-4 mb-3">
-                                                    @*<input type="text" name="" id="" class="form-control" />*@
-                                                    @Html.EditorFor(model => model.differentAccountTransferModel.ConversionRate, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                                    @Html.EditorFor(model => model.differentAccountTransferModel.ConversionRate, new { htmlAttributes = new { @id = "conversionRate", @class = "form-control form-control-md" } })
                                                     @Html.ValidationMessageFor(model => model.differentAccountTransferModel.ConversionRate, "", new { @class = "text-danger" })
 
                                                 </div>
@@ -212,7 +202,6 @@
                                         <div class="col">
                                             <div class="mt-0 mb-3">
                                                 <label for="floatingTextarea">Enter Six-Digit Pin </label>
-                                                @*<input type="password" name="" id="" class="form-control" />*@
                                                 @Html.EditorFor(model => model.differentAccountTransferModel.pin, new { htmlAttributes = new { @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.pin, "", new { @class = "text-danger" })
                                             </div>
