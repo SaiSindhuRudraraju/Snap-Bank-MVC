@@ -36,6 +36,38 @@ namespace Snap_Bank.Services
             }
             return false;
         }
+
+        public bool CheckUserName(String username)
+        {
+            var check = snapDbContext.AccountTables.ToList();
+            var result =  check.Where(c => c.UserName.Contains(username));
+            if(result.Count() == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckUserPassword(String username, String password)
+        {
+            var user = (from u in snapDbContext.AccountTables where u.UserName == username select u).FirstOrDefault();
+            if(user.Password == password)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckUserPin(int accountnumber, int pin)
+        {
+            var user = (from u in snapDbContext.AccountTables where u.AccountNumber == accountnumber select u).FirstOrDefault();
+            if (user.Pin == pin)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool Delete(int id)
         {
             //using (var ent = new SnapDbContext())

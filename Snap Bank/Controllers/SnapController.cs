@@ -28,12 +28,59 @@ namespace Snap_Bank.Controllers
         // GET: Snap
         public ActionResult Index()
         {
-            SnapDbContext db = new SnapDbContext();
-            //db.securityQuestions.Add(new Models.SecurityQuestions { BirthPlace="hyasdd", PetName="ca", FavouriteFood="ck" });
-            //db.accountNumbers.Add(new Models.AccountNumber{ Date = "9819", number = 20 });
-            //db.SaveChanges();
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Index(crediantials cred)
+        {
+            if (cred.username != null)
+            {
+                if(cred.password != null)
+                {
+                    if (accountTableService.CheckUserPassword(cred.username,cred.password))
+                    {
+                        return RedirectToAction("Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("password", "Incorrect Password!");
+                        return View(cred);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("password", "Enter Password!");
+                    return View(cred);
+                }
+            }
+            else if(cred.AccountNumber.ToString() != null)
+            {
+                if (cred.pin.ToString() != null)
+                {
+                    if (!accountTableService.CheckUserPin(cred.AccountNumber, cred.pin))
+                    {
+                        return RedirectToAction("Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("pin", "Incorrect Pin!");
+                        return View(cred);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("pin", "Enter Pin!");
+                    return View(cred);
+                }
+            }
+            else
+            {
+
+            }
+            return View() ;
+        }
+
         public ActionResult Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
@@ -49,12 +96,17 @@ namespace Snap_Bank.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
-            registerViewModel.CompleteSortCode = int.Parse(registerViewModel.SortCode1.ToString() + registerViewModel.SortCode2.ToString() + registerViewModel.SortCode3.ToString());
-            if (ModelState.IsValid)
+            if(!accountTableService.CheckUserName(registerViewModel.UserName))
             {
-                viewModel = registerViewModel;
-                return RedirectToAction("Questions");
+                registerViewModel.CompleteSortCode = int.Parse(registerViewModel.SortCode1.ToString() + registerViewModel.SortCode2.ToString() + registerViewModel.SortCode3.ToString());
+                if (ModelState.IsValid)
+                {
+                    viewModel = registerViewModel;
+                    return RedirectToAction("Questions");
+                }
+                return View(registerViewModel);
             }
+            ModelState.AddModelError("UserName", "User Already Exists!");
             return View(registerViewModel);
         }
         public ActionResult Questions()
@@ -137,12 +189,6 @@ namespace Snap_Bank.Controllers
         public ActionResult PaymentSuccess()
         {
             return View();
-        }
-        [AllowAnonymous]
-        [HttpGet]
-        public ActionResult UsernameExists(string UserName)
-        {
-            return Json(!String.Equals(UserName, "sanjay", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

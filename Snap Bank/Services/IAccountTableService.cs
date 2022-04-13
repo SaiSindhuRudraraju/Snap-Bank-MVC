@@ -14,6 +14,12 @@ namespace Snap_Bank.Services
 
         bool Save(RegisterViewModel registerViewModel);
 
+        bool CheckUserName(String username);
+
+        bool CheckUserPassword(String username, String password);
+
+        bool CheckUserPin(int accountnumber, int pin);
+
         bool Delete(int id);
 
         bool Put(RegisterViewModel registerViewModel);
