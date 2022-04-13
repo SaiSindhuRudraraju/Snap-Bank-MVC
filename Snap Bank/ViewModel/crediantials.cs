@@ -7,8 +7,8 @@ namespace Snap_Bank.ViewModel
 {
     public class crediantials
     {
-        public int AccountNumber { get; set; }
-        public int pin { get; set; }
+        public String AccountNumber { get; set; }
+        public String pin { get; set; }
         public string username { get; set; }
         public string password { get; set; }
     }

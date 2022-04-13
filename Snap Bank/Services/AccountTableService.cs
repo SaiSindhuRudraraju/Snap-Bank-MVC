@@ -40,8 +40,8 @@ namespace Snap_Bank.Services
         public bool CheckUserName(String username)
         {
             var check = snapDbContext.AccountTables.ToList();
-            var result =  check.Where(c => c.UserName.Contains(username));
-            if(result.Count() == 0)
+            var result = check.Where(c => c.UserName.Contains(username));
+            if (result.Count() == 0)
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace Snap_Bank.Services
         public bool CheckUserPassword(String username, String password)
         {
             var user = (from u in snapDbContext.AccountTables where u.UserName == username select u).FirstOrDefault();
-            if(user.Password == password)
+            if (user.Password == password)
             {
                 return true;
             }

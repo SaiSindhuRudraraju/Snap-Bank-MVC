@@ -36,15 +36,17 @@ namespace Snap_Bank.Controllers
         {
             if (cred.username != null)
             {
-                if(cred.password != null)
+                if (cred.password != null)
                 {
-                    if (accountTableService.CheckUserPassword(cred.username,cred.password))
+                    if (accountTableService.CheckUserPassword(cred.username, cred.password))
                     {
                         return RedirectToAction("Home");
                     }
                     else
                     {
                         ModelState.AddModelError("password", "Incorrect Password!");
+                        ModelState.AddModelError("AccountNumber", " ");
+                        ModelState.AddModelError("pin", " ");
                         return View(cred);
                     }
                 }
@@ -54,17 +56,19 @@ namespace Snap_Bank.Controllers
                     return View(cred);
                 }
             }
-            else if(cred.AccountNumber.ToString() != null)
+            else if (cred.AccountNumber.ToString() != null)
             {
                 if (cred.pin.ToString() != null)
                 {
-                    if (!accountTableService.CheckUserPin(cred.AccountNumber, cred.pin))
+                    if (accountTableService.CheckUserPin(int.Parse(cred.AccountNumber), int.Parse(cred.pin)))
                     {
                         return RedirectToAction("Home");
                     }
                     else
                     {
                         ModelState.AddModelError("pin", "Incorrect Pin!");
+                        ModelState.AddModelError("username", " ");
+                        ModelState.AddModelError("password", " ");
                         return View(cred);
                     }
                 }
@@ -78,7 +82,7 @@ namespace Snap_Bank.Controllers
             {
 
             }
-            return View() ;
+            return View();
         }
 
         public ActionResult Register()
@@ -96,7 +100,7 @@ namespace Snap_Bank.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
-            if(!accountTableService.CheckUserName(registerViewModel.UserName))
+            if (!accountTableService.CheckUserName(registerViewModel.UserName))
             {
                 registerViewModel.CompleteSortCode = int.Parse(registerViewModel.SortCode1.ToString() + registerViewModel.SortCode2.ToString() + registerViewModel.SortCode3.ToString());
                 if (ModelState.IsValid)
