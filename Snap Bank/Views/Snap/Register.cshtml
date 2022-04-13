@@ -10,6 +10,8 @@
     <script src="~/Scripts/jquery-1.12.4.js"></script>
     <link href="@Url.Content("~/Content/Register.css")" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
 }
 
 <div class="pt-3 wrap-div">
@@ -87,7 +89,6 @@
                             </div>
                             <div class="col-3 col-md-3 col-sd-12">
                                 <label>Account Type</label>
-                                @*@Html.DropDownListFor(model => model.AccountType, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.AccountType))), "Select Account Type", new { @class = "form-select form-control form-control-md" })*@
                                 @Html.EditorFor(model => model.AccountType, new { htmlAttributes = new { type = "text", @readonly = "readonly", @class = "form-control form-control-md" } })
                                 @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
                             </div>

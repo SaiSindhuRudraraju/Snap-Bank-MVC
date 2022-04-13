@@ -110,7 +110,7 @@ namespace Snap_Bank.Controllers
         public ActionResult Settings()
         {
             //get detailes of user and set it to the input feilds in setting feild
-            return View(); 
+            return View();
         }
         public ActionResult AddSavingsAccount()
         {
@@ -138,6 +138,11 @@ namespace Snap_Bank.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult UsernameExists(string UserName)
+        {
+            return Json(!String.Equals(UserName, "sanjay", StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

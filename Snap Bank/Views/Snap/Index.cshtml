@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Snap_Bank.ViewModel.crediantials
+@{
     ViewBag.Title = "Index";
 }
 
@@ -10,30 +11,38 @@
         <div class="imageContainer col-md-7" style="padding-top: 3%">
             <img src="~/Images/LoginImg.png" alt="Sample image" />
         </div>
-        <div class="col-md-5 col-sd-12 login-div">
-            <form action="/Snap/Home/" class="mt-5">
+        <div class="col-md-5 col-sd-12 mt-5 login-div">
+            @using (Html.BeginForm("Register", "Snap", FormMethod.Post))
+            {
                 <div class="my-4" style="justify-content: center">
                     <h4 class="text-center fw-bold mx-5 mb-0">LOG INTO SNAP</h4>
                 </div>
                 <!-- Account Number -->
                 <div class="mb-4">
-                    <input type="number" class="form-control" placeholder="Account Number" />
+                    @*<input type="number" class="form-control" placeholder="Account Number" />*@
+                    @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                    @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
                 </div>
                 <!-- PIN -->
                 <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="six digit pin" />
+                    @*<input type="password" class="form-control" placeholder="six digit pin" />*@
+                    @Html.EditorFor(model => model.pin, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                    @Html.ValidationMessageFor(model => model.pin, "", new { @class = "text-danger" })
                 </div>
                 <div class="my-4" style="justify-content: center">
                     <p class="text-center fw-bold mx-5 mb-0">OR</p>
                 </div>
                 <!-- User Name -->
                 <div class="mb-4">
-                    <input type="text" class="form-control" placeholder="User Name" />
+                    @*<input type="text" class="form-control" placeholder="User Name" />*@
+                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
                 </div>
-
                 <!-- Password -->
                 <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="Password" />
+                    @*<input type="password" class="form-control" placeholder="Password" />*@
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Checkbox -->
@@ -55,7 +64,7 @@
                         <a href="/Snap/Register/" class="link-danger">Register</a>
                     </p>
                 </div>
-            </form>
+            }
         </div>
     </div>
 </div>

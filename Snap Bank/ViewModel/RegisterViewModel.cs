@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Snap_Bank.ViewModel
 {
@@ -12,16 +13,13 @@ namespace Snap_Bank.ViewModel
         public String FirstName { get; set; }
         [Required(ErrorMessage = "Please Enter Last Name")]
         public String LastName { get; set; }
-
         [Required(ErrorMessage = "Please Enter Data of Birth")]
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
         [Required(ErrorMessage = "Please Enter Gender")]
         public String Gender { get; set; }
-
         [Required(ErrorMessage = "Please Enter Email")]
         public String Email { get; set; }
-
         [Required(ErrorMessage = "Please Enter Phone")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
                    ErrorMessage = "Entered phone format is not valid.")]
@@ -30,12 +28,12 @@ namespace Snap_Bank.ViewModel
         public int SortCode2 { get; set; }
         public int SortCode3 { get; set; }
         public int CompleteSortCode { get; set; }
-
         [Required(ErrorMessage = "Please Choose Account Type")]
         public String AccountType { get; set; }
         public int AccountNumber { get; set; }
-
         [Required(ErrorMessage = "Please Enter UserName")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "user name must be combination of letters and numbers only.")]
+        [Remote("UsernameExists", "Snap", ErrorMessage = "User name already registered.")]
         public String UserName { get; set; }
 
         [Required(ErrorMessage = "Please Enter password")]
@@ -44,9 +42,10 @@ namespace Snap_Bank.ViewModel
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}$", ErrorMessage = "Password must contain: Minimum 8 characters atleast 1 UpperCase Alphabet, 1 LowerCase Alphabet, 1 Number and 1 Special Character")]
         public String Password { get; set; }
 
+
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Please Enter Confirm password")]
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
         [DataType(DataType.Password)]
         public String ConfirmPassword { get; set; }
 
