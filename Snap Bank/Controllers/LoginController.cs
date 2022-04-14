@@ -44,7 +44,7 @@ namespace Snap_Bank.Controllers
                 {
                     if (accountTableService.CheckUserPassword(cred.username, cred.password))
                     {
-                        Session.Add("user", cred.username);
+                        Session.Add("user", cred);
                         return RedirectToRoute(new { controller = "Snap", action = "Home" });
                     }
                     else
@@ -67,7 +67,7 @@ namespace Snap_Bank.Controllers
                 {
                     if (accountTableService.CheckUserPin(int.Parse(cred.AccountNumber), int.Parse(cred.pin)))
                     {
-                        Session.Add("user", cred.AccountNumber);
+                        Session.Add("user", cred);
                         return RedirectToRoute(new { controller = "Snap", action = "Home" });
                     }
                     else
@@ -102,7 +102,6 @@ namespace Snap_Bank.Controllers
             registerViewModel.SortCode1 = 12;
             registerViewModel.SortCode2 = 93;
             registerViewModel.SortCode3 = 64;
-            registerViewModel.AccountType = "Current Account";
             return View(registerViewModel);
         }
         [HttpPost]

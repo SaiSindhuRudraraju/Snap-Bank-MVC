@@ -68,6 +68,20 @@ namespace Snap_Bank.Services
             return false;
         }
 
+        public RegisterViewModel GetUserByName(String username)
+        {
+            RegisterViewModel viewModel = new RegisterViewModel();
+            var user = snapDbContext.AccountTables.Where(s => s.UserName == username).FirstOrDefault();
+            return (map.MapAccountTableToRegisterViewModel(user, viewModel));
+        }
+
+        public RegisterViewModel GerUserByNumber(int accountnumber)
+        {
+            RegisterViewModel viewModel = new RegisterViewModel();
+            var user = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
+            return (map.MapAccountTableToRegisterViewModel(user, viewModel));
+        }
+
         public bool Delete(int id)
         {
             //using (var ent = new SnapDbContext())

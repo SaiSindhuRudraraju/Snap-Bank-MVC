@@ -20,6 +20,10 @@ namespace Snap_Bank.Services
 
         bool CheckUserPin(int accountnumber, int pin);
 
+        RegisterViewModel GetUserByName(String username);
+
+        RegisterViewModel GerUserByNumber(int accountnumber);
+
         bool Delete(int id);
 
         bool Put(RegisterViewModel registerViewModel);

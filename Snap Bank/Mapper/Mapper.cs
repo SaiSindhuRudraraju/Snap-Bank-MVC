@@ -41,6 +41,17 @@ namespace Snap_Bank.Mapper
             return securityQuestions;
         }
 
+        public RegisterViewModel MapAccountTableToRegisterViewModel(AccountTable accountTable, RegisterViewModel viewModel)
+        {
+            viewModel.AccountNumber = accountTable.AccountNumber;
+            viewModel.AccountType = accountTable.AccountType;
+            viewModel.Password = accountTable.Password;
+            viewModel.CompleteSortCode = accountTable.SortCode;
+            viewModel.UserName = accountTable.UserName;
+            viewModel.Pin = accountTable.Pin;
+            return viewModel;
+        }
+
         //public AccountTable MapAccountViewModelToAccount(AccountViewModel accountViewModel, AccountTable account)
         //{
         //    account.AccountNumber = accountViewModel.AccountNumber;

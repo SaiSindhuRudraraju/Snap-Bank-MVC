@@ -173,6 +173,15 @@ namespace Snap_Bank.Controllers
         }
         public ActionResult Home()
         {
+            var user = (crediantials)Session["user"];
+            if(user.username != null)
+            {
+                viewModel = accountTableService.GetUserByName(user.username);
+            }
+            else if(user.AccountNumber != null)
+            {
+                viewModel = accountTableService.GerUserByNumber(int.Parse(user.AccountNumber));
+            }
             return View();
         }
         public ActionResult ForgetPassword()
