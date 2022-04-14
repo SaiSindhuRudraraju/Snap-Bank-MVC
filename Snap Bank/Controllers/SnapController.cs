@@ -1,4 +1,5 @@
-﻿using Snap_Bank.Models;
+﻿using Snap_Bank.Filter;
+using Snap_Bank.Models;
 using Snap_Bank.Services;
 using Snap_Bank.ViewModel;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Snap_Bank.Controllers
 {
+    [AuthenticationFilter]
     public class SnapController : Controller
     {
         public static RegisterViewModel viewModel;
@@ -77,10 +79,6 @@ namespace Snap_Bank.Controllers
                     ModelState.AddModelError("pin", "Enter Pin!");
                     return View(cred);
                 }
-            }
-            else
-            {
-
             }
             return View();
         }

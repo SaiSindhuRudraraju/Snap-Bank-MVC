@@ -193,7 +193,9 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SnapController.cs" />
+    <Compile Include="Filter\AuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -249,6 +251,7 @@
     <Content Include="Views\Snap\AccountActivity.cshtml" />
     <Content Include="Views\Snap\PaymentSuccess.cshtml" />
     <Content Include="Views\Snap\FundTransfer.cshtml" />
+    <Content Include="Views\Login\Signin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
