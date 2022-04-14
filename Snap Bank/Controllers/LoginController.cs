@@ -10,11 +10,18 @@ namespace Snap_Bank.Controllers
 {
     public class LoginController : Controller
     {
+        public static RegisterViewModel viewModel;
         IAccountTableService accountTableService;
+        IPersonalDetailsService personalDetailsService;
+        ISecurityQuestionsService securityQuestionsService;
+        ITransactionsService transactionsService;
 
-        public LoginController(IAccountTableService _accountTableService)
+        public LoginController(IAccountTableService _accountTableService, IPersonalDetailsService _personalDetailsService, ISecurityQuestionsService _securityQuestionsService, ITransactionsService _transactionsService)
         {
             accountTableService = _accountTableService;
+            personalDetailsService = _personalDetailsService;
+            securityQuestionsService = _securityQuestionsService;
+            transactionsService = _transactionsService;
         }
 
         // GET: Login
@@ -84,6 +91,57 @@ namespace Snap_Bank.Controllers
                 return RedirectToRoute(new { controller = controller_action[1], action = controller_action[2] });
             }
             return RedirectToRoute(new { controller = "Snap", action = "Home" });
+        }
+
+        public ActionResult Register()
+        {
+            RegisterViewModel registerViewModel = new RegisterViewModel();
+            Random rnd = new Random();
+            int myRandomNo = rnd.Next(100000000, 999999999);
+            registerViewModel.AccountNumber = myRandomNo;
+            registerViewModel.SortCode1 = 12;
+            registerViewModel.SortCode2 = 93;
+            registerViewModel.SortCode3 = 64;
+            registerViewModel.AccountType = "Current Account";
+            return View(registerViewModel);
+        }
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel registerViewModel)
+        {
+            if (!accountTableService.CheckUserName(registerViewModel.UserName))
+            {
+                registerViewModel.CompleteSortCode = int.Parse(registerViewModel.SortCode1.ToString() + registerViewModel.SortCode2.ToString() + registerViewModel.SortCode3.ToString());
+                if (ModelState.IsValid)
+                {
+                    viewModel = registerViewModel;
+                    return RedirectToAction("Questions");
+                }
+                return View(registerViewModel);
+            }
+            ModelState.AddModelError("UserName", "User Already Exists!");
+            return View(registerViewModel);
+        }
+
+        public ActionResult Questions()
+        {
+            return View(new QuestionsViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult Questions(QuestionsViewModel questionsViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                viewModel.SecurityQuestion1 = questionsViewModel.SecurityQuestion1.ToString();
+                viewModel.SecurityQuestion2 = questionsViewModel.SecurityQuestion2.ToString();
+                viewModel.SecurityQuestion3 = questionsViewModel.SecurityQuestion3.ToString();
+                //Save to DB
+
+                accountTableService.Save(viewModel);
+                personalDetailsService.Save(viewModel);
+                securityQuestionsService.Save(viewModel);
+            }
+            return View("Signin");
         }
     }
 }

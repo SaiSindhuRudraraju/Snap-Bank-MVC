@@ -252,6 +252,8 @@
     <Content Include="Views\Snap\PaymentSuccess.cshtml" />
     <Content Include="Views\Snap\FundTransfer.cshtml" />
     <Content Include="Views\Login\Signin.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\Login\Questions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

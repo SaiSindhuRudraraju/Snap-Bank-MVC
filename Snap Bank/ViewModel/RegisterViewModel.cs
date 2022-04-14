@@ -15,7 +15,7 @@ namespace Snap_Bank.ViewModel
         public String LastName { get; set; }
         [Required(ErrorMessage = "Please Enter Data of Birth")]
         [DataType(DataType.Date)]
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         [Required(ErrorMessage = "Please Enter Gender")]
         public String Gender { get; set; }
         [Required(ErrorMessage = "Please Enter Email")]
