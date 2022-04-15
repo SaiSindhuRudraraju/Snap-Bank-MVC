@@ -7,8 +7,7 @@
 {
     <link href="@Url.Content("~/Content/Home.css")" rel="stylesheet" type="text/css" />
 }
-<script>
-</script>
+
 <div class="row" style="width: 100%;">
     <div class="col-1 col-sm-1 col-md-1">
         <div class="sidebar">
@@ -62,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col d-flex justify-content-left">
+                        <div class="col d-flex justify-content-left" id="SecondaryCard">
                             <div class="container-fluid p-3 my-3">
                                 <div class="height-100 d-flex justify-content-center align-items-center">
                                     <div class="card debitcard p-3">
@@ -89,6 +88,11 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+                        if ('@Model.NumberOfAccounts' == 1) {
+                            document.getElementById('SecondaryCard').classList.add('d-none');
+                        }
+                    </script>
                     <div class="row">
                         <div class="col-md-6 col-sd-12">
                             <div class="card m-5 border-3 main-card" onclick="location.href='/Snap/AccountActivity/';"
