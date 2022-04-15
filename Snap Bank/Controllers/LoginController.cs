@@ -31,6 +31,7 @@ namespace Snap_Bank.Controllers
         }
         public ActionResult Signin()
         {
+            Session.Add("user", null);
             return View();
         }
 
@@ -110,6 +111,7 @@ namespace Snap_Bank.Controllers
             if (!accountTableService.CheckUserName(registerViewModel.UserName))
             {
                 registerViewModel.CompleteSortCode = int.Parse(registerViewModel.SortCode1.ToString() + registerViewModel.SortCode2.ToString() + registerViewModel.SortCode3.ToString());
+                accountTableService.ValidateAccountType(registerViewModel);
                 if (ModelState.IsValid)
                 {
                     viewModel = registerViewModel;

@@ -217,6 +217,7 @@
     <Compile Include="SnapDbContext.cs" />
     <Compile Include="ViewModel\crediantials.cs" />
     <Compile Include="ViewModel\FundTransferViewModel.cs" />
+    <Compile Include="ViewModel\HomePageDetailesViewModel.cs" />
     <Compile Include="ViewModel\QuestionsViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
   </ItemGroup>

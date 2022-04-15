@@ -13,16 +13,22 @@ namespace Snap_Bank.Services
         IEnumerable<AccountTable> Get();
 
         bool Save(RegisterViewModel registerViewModel);
-
+        RegisterViewModel GetUserData(String Username);
         bool CheckUserName(String username);
+        void ValidateAccountType(RegisterViewModel registerViewModel);
+        int GetNumberOfUsers(String username);
+        int GetNumberOfUsers(int accountnumber);
 
+        string getUserAccountType(String username);
+        string getUserAccountType(int accountnumber);
+        RegisterViewModel GetUserData(int AccountNumber);
         bool CheckUserPassword(String username, String password);
 
         bool CheckUserPin(int accountnumber, int pin);
 
-        RegisterViewModel GetUserByName(String username);
+        HomePageDetailesViewModel GetUserByName(String username);
 
-        RegisterViewModel GerUserByNumber(int accountnumber);
+        HomePageDetailesViewModel GerUserByNumber(int accountnumber);
 
         bool Delete(int id);
 

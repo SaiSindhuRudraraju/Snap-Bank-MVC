@@ -68,12 +68,17 @@
                                 <button class="btn btn-primary mb-3">change details</button>
                             </div>
                         </form>
-                        @using (Html.BeginForm("AddSavingsAccount", "snap", FormMethod.Post))
+
+                        @using (Html.BeginForm("AddAnotherAccount", "snap", FormMethod.Post))
                         {
-                            <div class="text-center mt-4 mb-2 mx-2">
-                                <button type="submit" class="btn btn-secondary mb-3">Add Account</button>
+                            <div class="text-center mt-4 mb-2 mx-2" id="addaccount">
+                                <button type="submit" class="btn btn-secondary mb-3">Add @ViewBag.AccountType</button>
                             </div>
                         }
+                        <script>
+                            if (document.getElementById('addaccount').innerText == "Add")
+                                document.getElementById('addaccount').style.display = 'none';
+                        </script>
                     </div>
                 </div>
             </div>

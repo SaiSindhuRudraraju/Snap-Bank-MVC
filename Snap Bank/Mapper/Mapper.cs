@@ -40,15 +40,38 @@ namespace Snap_Bank.Mapper
             securityQuestions.FavouriteFood = viewModel.SecurityQuestion3;
             return securityQuestions;
         }
-
-        public RegisterViewModel MapAccountTableToRegisterViewModel(AccountTable accountTable, RegisterViewModel viewModel)
+        public RegisterViewModel MapAccountTableToRegisterDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetailes, RegisterViewModel viewModel)
         {
             viewModel.AccountNumber = accountTable.AccountNumber;
-            viewModel.AccountType = accountTable.AccountType;
-            viewModel.Password = accountTable.Password;
-            viewModel.CompleteSortCode = accountTable.SortCode;
-            viewModel.UserName = accountTable.UserName;
+            viewModel.FirstName = personalDetailes.FirstName;
+            viewModel.LastName = personalDetailes.LastName;
+            viewModel.Gender = personalDetailes.Gender;
+            viewModel.Email = personalDetailes.Gmail;
+            viewModel.DateOfBirth = personalDetailes.DateOfBirth;
             viewModel.Pin = accountTable.Pin;
+            viewModel.Password = accountTable.Password;
+            viewModel.Phone  = personalDetailes.MobileNumber;
+            viewModel.SortCode1 = accountTable.SortCode/100;
+            viewModel.SortCode2 = (accountTable.SortCode%10000)/100;
+            viewModel.SortCode3 = accountTable.SortCode%100;
+            viewModel.UserName = accountTable.UserName;
+            if (accountTable.AccountType == "SavingsAccount")
+                viewModel.AccountType = "CurrentAccount";
+            else
+                viewModel.AccountType= "SavingsAccount";
+            return viewModel;
+        }
+        public HomePageDetailesViewModel MapAccountTableToHomeDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
+        {
+            viewModel.AccountNumber = accountTable.AccountNumber;
+            viewModel.LastDigits = accountTable.AccountNumber%10000;
+            viewModel.AccountType = accountTable.AccountType;
+            viewModel.FirstName = personalDetails.FirstName;
+            viewModel.LastName = personalDetails.LastName;
+            viewModel.Date  = "09/12/2024";
+            viewModel.AccountActivity = null;
+            viewModel.SentMoneyActivity = null;
+            viewModel.RecivedMoneyActivity = null;
             return viewModel;
         }
 
