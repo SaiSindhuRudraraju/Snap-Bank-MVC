@@ -8,7 +8,6 @@
     <link href="@Url.Content("~/Content/Home.css")" rel="stylesheet" type="text/css" />
 }
 <script>
-
 </script>
 <div class="row" style="width: 100%;">
     <div class="col-1 col-sm-1 col-md-1">
@@ -63,17 +62,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col d-flex justify-content-left d-none">
+                        <div class="col d-flex justify-content-left">
                             <div class="container-fluid p-3 my-3">
                                 <div class="height-100 d-flex justify-content-center align-items-center">
                                     <div class="card debitcard p-3">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <h6>SAVINGS ACCOUNT</h6>
+                                            <h6>@Model.AccountType2</h6>
                                             <h2>SNAP</h2>
                                         </div>
                                         <div class="px-2 number mt-3 d-flex justify-content-between align-items-center">
-                                            <span>1234</span> <span>5678</span> <span>8910</span>
-                                            <span>1112</span>
+                                            <span>****</span> <span>****</span> <span>****</span>
+                                            <span>@Model.LastDigits2</span>
                                         </div>
                                         <div class="p-4 card-border mt-4">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -81,8 +80,8 @@
                                                 <span class="expires">Expires</span>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <span class="name">CHITIMILLA PRATEEK</span>
-                                                <span class="date">10/20</span>
+                                                <span class="name">@Model.LastName @Model.FirstName</span>
+                                                <span class="date">@Model.Date</span>
                                             </div>
                                         </div>
                                     </div>

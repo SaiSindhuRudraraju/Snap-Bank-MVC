@@ -61,6 +61,22 @@ namespace Snap_Bank.Mapper
                 viewModel.AccountType= "SavingsAccount";
             return viewModel;
         }
+        public HomePageDetailesViewModel MapUserAccountPersonalAccountToHomePage(AccountTable account1, AccountTable account2, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
+        {
+            viewModel.AccountNumber =account1.AccountNumber;
+            viewModel.AccountNumber2 = account2.AccountNumber;
+            viewModel.LastDigits = account1.AccountNumber%10000;
+            viewModel.LastDigits2 = account2.AccountNumber%10000;
+            viewModel.FirstName = personalDetails.FirstName;
+            viewModel.LastName = personalDetails.LastName;
+            viewModel.AccountType = account1.AccountType;
+            viewModel.AccountType2 = account2.AccountType;
+            viewModel.Date = "09/12/2024";
+            viewModel.AccountActivity = null;
+            viewModel.SentMoneyActivity = null;
+            viewModel.RecivedMoneyActivity = null;
+            return viewModel;
+        }
         public HomePageDetailesViewModel MapAccountTableToHomeDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
         {
             viewModel.AccountNumber = accountTable.AccountNumber;

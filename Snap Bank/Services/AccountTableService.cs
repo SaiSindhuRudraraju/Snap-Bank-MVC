@@ -113,11 +113,13 @@ namespace Snap_Bank.Services
         public HomePageDetailesViewModel GetUserByName(String username)
         {
             HomePageDetailesViewModel homePageDetailesViewModel = new HomePageDetailesViewModel();
-            var data = snapDbContext.AccountTables.Where(s => s.UserName == username);
+            var data = snapDbContext.AccountTables.Where(s => s.UserName == username).ToList();
             if (data.Count() == 2)
             {
-                var userAccountDetailes1 = data.First();
-                var userAccountDetailes2 = data.ElementAt(1);
+                var userAccountDetailes1 = data[0];
+                var userAccountDetailes2 = data[1];
+                var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.UserId == userAccountDetailes1.UserId).FirstOrDefault();
+                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel);
             }
             else
             {
@@ -126,13 +128,24 @@ namespace Snap_Bank.Services
                 return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel));
             }
         }
-
         public HomePageDetailesViewModel GerUserByNumber(int accountnumber)
         {
             HomePageDetailesViewModel homePageDetailesViewModel = new HomePageDetailesViewModel();
-            var userAccountDetailes = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
-            var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).FirstOrDefault();
-            return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel));
+            var user = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
+            var data = snapDbContext.AccountTables.Where(s => s.UserName == user.UserName);
+            if (data.Count() == 2)
+            {
+                var userAccountDetailes1 = data.ElementAt(0);
+                var userAccountDetailes2 = data.ElementAt(1);
+                var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.UserId == data.FirstOrDefault().UserId).FirstOrDefault();
+                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel);
+            }
+            else
+            {
+                var userAccountDetailes = data.FirstOrDefault();
+                var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).FirstOrDefault();
+                return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel));
+            }
         }
 
         public bool Delete(int id)
