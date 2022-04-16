@@ -16,6 +16,7 @@ namespace Snap_Bank.Controllers
         ISecurityQuestionsService securityQuestionsService;
         ITransactionsService transactionsService;
 
+        //Constructor to get instance of service
         public LoginController(IAccountTableService _accountTableService, IPersonalDetailsService _personalDetailsService, ISecurityQuestionsService _securityQuestionsService, ITransactionsService _transactionsService)
         {
             accountTableService = _accountTableService;
@@ -23,18 +24,15 @@ namespace Snap_Bank.Controllers
             securityQuestionsService = _securityQuestionsService;
             transactionsService = _transactionsService;
         }
-
-        // GET: Login
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
+        //First View available to the user when application run (To login or register)
         public ActionResult Signin()
         {
             Session.Add("user", null);
             return View();
         }
 
+        //When Clicked Login button in Signin page
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Signin(crediantials cred, String redirectUrl)
@@ -62,7 +60,7 @@ namespace Snap_Bank.Controllers
                     return View(cred);
                 }
             }
-            else if (cred.AccountNumber.ToString() != null)
+            else if (cred.AccountNumber!=null && cred.AccountNumber.ToString() != null)
             {
                 if (cred.pin.ToString() != null)
                 {
@@ -94,6 +92,7 @@ namespace Snap_Bank.Controllers
             return RedirectToRoute(new { controller = "Snap", action = "Home" });
         }
 
+        //When Clicked Register option for registering new User in signin page(First Account Creation)
         public ActionResult Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
@@ -105,6 +104,8 @@ namespace Snap_Bank.Controllers
             registerViewModel.SortCode3 = 64;
             return View(registerViewModel);
         }
+
+        //For A New Users First Accounts Details When Clicked Next in Register page To goto Questions Page
         [HttpPost]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
@@ -123,11 +124,13 @@ namespace Snap_Bank.Controllers
             return View(registerViewModel);
         }
 
+        //When Clicked Next in Register Page For First Account Of The User
         public ActionResult Questions()
         {
             return View(new QuestionsViewModel());
         }
 
+        //When Clicked Submit in the Questions Page to Save User's first account Data in the database
         [HttpPost]
         public ActionResult Questions(QuestionsViewModel questionsViewModel)
         {

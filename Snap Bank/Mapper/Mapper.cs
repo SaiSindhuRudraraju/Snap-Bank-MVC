@@ -25,7 +25,7 @@ namespace Snap_Bank.Mapper
             personalDetails.AccountNumber = viewModel.AccountNumber;
             personalDetails.FirstName = viewModel.FirstName;
             personalDetails.LastName = viewModel.LastName;
-            personalDetails.DateOfBirth = (DateTime)viewModel.DateOfBirth;
+            personalDetails.DateOfBirth = viewModel.DateOfBirth;
             personalDetails.Gender = viewModel.Gender;
             personalDetails.Gmail = viewModel.Email;
             personalDetails.MobileNumber = viewModel.Phone;
@@ -40,27 +40,43 @@ namespace Snap_Bank.Mapper
             securityQuestions.FavouriteFood = viewModel.SecurityQuestion3;
             return securityQuestions;
         }
-        public RegisterViewModel MapAccountTableToRegisterDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetailes, RegisterViewModel viewModel)
+
+        public RegisterViewModel MapExistingAccountTableToRegisterViewModel(RegisterViewModel registerViewModel, AccountTable accountTable)
         {
-            viewModel.AccountNumber = accountTable.AccountNumber;
-            viewModel.FirstName = personalDetailes.FirstName;
-            viewModel.LastName = personalDetailes.LastName;
-            viewModel.Gender = personalDetailes.Gender;
-            viewModel.Email = personalDetailes.Gmail;
-            viewModel.DateOfBirth = personalDetailes.DateOfBirth;
-            viewModel.Pin = accountTable.Pin;
-            viewModel.Password = accountTable.Password;
-            viewModel.Phone  = personalDetailes.MobileNumber;
-            viewModel.SortCode1 = accountTable.SortCode/100;
-            viewModel.SortCode2 = (accountTable.SortCode%10000)/100;
-            viewModel.SortCode3 = accountTable.SortCode%100;
-            viewModel.UserName = accountTable.UserName;
-            if (accountTable.AccountType == "SavingsAccount")
-                viewModel.AccountType = "CurrentAccount";
+            if(accountTable.AccountType == "SavingsAccount")
+            {
+                registerViewModel.AccountType = "CurrentAccount";
+            }
             else
-                viewModel.AccountType= "SavingsAccount";
-            return viewModel;
+            {
+                registerViewModel.AccountType = "SavingsAccount";
+            }
+            registerViewModel.Password = accountTable.Password;
+            registerViewModel.CompleteSortCode = accountTable.SortCode;
+            registerViewModel.UserName = accountTable.UserName;
+            registerViewModel.Pin = accountTable.Pin;
+            return registerViewModel;
         }
+
+        public RegisterViewModel MapExistingPersonalDetalisToRegisterViewModel(RegisterViewModel registerViewModel, PersonalDetails personalDetails)
+        {
+            registerViewModel.FirstName = personalDetails.FirstName;
+            registerViewModel.LastName = personalDetails.LastName;
+            registerViewModel.DateOfBirth = personalDetails.DateOfBirth;
+            registerViewModel.Gender = personalDetails.Gender;
+            registerViewModel.Email = personalDetails.Gmail;
+            registerViewModel.Phone = personalDetails.MobileNumber;
+            return registerViewModel;
+        }
+
+        public RegisterViewModel MapExistingQuestionsToRegisterViewModel(RegisterViewModel registerViewModel, SecurityQuestions securityQuestions)
+        {
+            registerViewModel.SecurityQuestion1 = securityQuestions.BirthPlace;
+            registerViewModel.SecurityQuestion2 = securityQuestions.PetName;
+            registerViewModel.SecurityQuestion3 = securityQuestions.FavouriteFood;
+            return registerViewModel;
+        }
+
         public HomePageDetailesViewModel MapUserAccountPersonalAccountToHomePage(AccountTable account1, AccountTable account2, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
         {
             viewModel.AccountNumber =account1.AccountNumber;
@@ -77,6 +93,7 @@ namespace Snap_Bank.Mapper
             viewModel.RecivedMoneyActivity = null;
             return viewModel;
         }
+
         public HomePageDetailesViewModel MapAccountTableToHomeDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
         {
             viewModel.AccountNumber = accountTable.AccountNumber;
@@ -90,109 +107,5 @@ namespace Snap_Bank.Mapper
             viewModel.RecivedMoneyActivity = null;
             return viewModel;
         }
-
-        //public AccountTable MapAccountViewModelToAccount(AccountViewModel accountViewModel, AccountTable account)
-        //{
-        //    account.AccountNumber = accountViewModel.AccountNumber;
-        //    account.AccountType = accountViewModel.AccountType;
-        //    account.UserId = accountViewModel.UserId;
-        //    account.Password = accountViewModel.Password;
-        //    account.SortCode = accountViewModel.SortCode;
-        //    account.UserName = accountViewModel.UserName;
-        //    account.Pin = accountViewModel.Pin;
-
-
-        //    return account;
-        //}
-
-        //public AccountViewModel MapAccountToMapAccountViewModel(AccountTable account, AccountViewModel accountViewModel)
-        //{
-        //    accountViewModel.AccountNumber = account.AccountNumber;
-        //    accountViewModel.AccountType = account.AccountType;
-        //    accountViewModel.UserId = account.UserId;
-        //    accountViewModel.Password = account.Password;
-        //    accountViewModel.SortCode = account.SortCode;
-        //    accountViewModel.UserName = account.UserName;
-        //    accountViewModel.Pin = account.Pin;
-
-        //    return accountViewModel;
-        //}
-
-        //public PersonalDetailsViewModel MapPersonalDetailsToPersonalDetailsViewMOdel(PersonalDetailsViewModel personalDetailsViewModel, PersonalDetails personalDetails)
-        //{
-        //    personalDetailsViewModel.UserId = personalDetails.UserId;
-        //    personalDetailsViewModel.FirstName = personalDetails.FirstName;
-        //    personalDetailsViewModel.LastName = personalDetails.LastName;
-        //    personalDetailsViewModel.MobileNumber = personalDetails.MobileNumber;
-        //    personalDetailsViewModel.Gender = personalDetails.Gender;
-        //    personalDetailsViewModel.Gmail = personalDetails.Gmail;
-        //    personalDetailsViewModel.DateOfBirth = personalDetails.DateOfBirth;
-
-        //    return personalDetailsViewModel;
-
-        //}
-
-        //public PersonalDetails PersonalDetailsViewModelToPersonalDetails(PersonalDetails personalDetails, PersonalDetailsViewModel personalDetailsViewModel)
-        //{
-        //    personalDetails.UserId = personalDetailsViewModel.UserId;
-        //    personalDetails.FirstName = personalDetailsViewModel.FirstName;
-        //    personalDetails.LastName = personalDetailsViewModel.LastName;
-        //    personalDetails.MobileNumber = personalDetailsViewModel.MobileNumber;
-        //    personalDetails.Gender = personalDetailsViewModel.Gender;
-        //    personalDetails.Gmail = personalDetailsViewModel.Gmail;
-        //    personalDetails.DateOfBirth = personalDetailsViewModel.DateOfBirth;
-
-        //    return personalDetails;
-        //}
-
-        //public SecurityQuestionsViewModel MapSecurityQuestionsToSecurityQuestionsViewModel(SecurityQuestionsViewModel securityQuestionsViewModel, SecurityQuestions securityQuestions)
-        //{
-        //    securityQuestionsViewModel.UserId = securityQuestions.UserId;
-        //    securityQuestionsViewModel.PetName = securityQuestions.PetName;
-        //    securityQuestionsViewModel.BirthPlace = securityQuestions.BirthPlace;
-        //    securityQuestionsViewModel.FavouriteFood = securityQuestions.FavouriteFood;
-
-        //    return securityQuestionsViewModel;
-        //}
-
-        //public SecurityQuestions MapSecurityQuestionsViewModelToSecurityQuestions(SecurityQuestions securityQuestions, SecurityQuestionsViewModel securityQuestionsViewModel)
-        //{
-        //    securityQuestions.UserId = securityQuestionsViewModel.UserId;
-        //    securityQuestions.PetName = securityQuestionsViewModel.PetName;
-        //    securityQuestions.BirthPlace = securityQuestionsViewModel.BirthPlace;
-        //    securityQuestions.FavouriteFood = securityQuestionsViewModel.FavouriteFood;
-
-        //    return securityQuestions;
-        //}
-
-        //public Transactions MapTransactionViewModelToTranscations(Transactions transactions, TransactionViewModel transactionViewModel)
-        //{
-        //    transactions.UserId = transactionViewModel.UserId;
-        //    transactions.TransactionDate = transactionViewModel.TransactionDate;
-        //    transactions.FromAccount = transactionViewModel.FromAccount;
-        //    transactions.ToAccount = transactionViewModel.ToAccount;
-        //    transactions.AccountType = transactionViewModel.AccountType;
-        //    transactions.Amount = transactionViewModel.Amount;
-        //    transactions.TransactionType = transactionViewModel.TransactionType;
-        //    transactions.TransactionCompleted = transactionViewModel.TransactionCompleted;
-        //    transactions.mode = transactionViewModel.mode;
-
-        //    return transactions;
-        //}
-
-        //public TransactionViewModel MapTransactionsToTranscationViewModel(TransactionViewModel transactionsViewModel, Transactions transactions)
-        //{
-        //    transactionsViewModel.UserId = transactions.UserId;
-        //    transactionsViewModel.TransactionDate = transactions.TransactionDate;
-        //    transactionsViewModel.FromAccount = transactions.FromAccount;
-        //    transactionsViewModel.ToAccount = transactions.ToAccount;
-        //    transactionsViewModel.AccountType = transactions.AccountType;
-        //    transactionsViewModel.Amount = transactions.Amount;
-        //    transactionsViewModel.TransactionType = transactions.TransactionType;
-        //    transactionsViewModel.TransactionCompleted = transactions.TransactionCompleted;
-        //    transactionsViewModel.mode = transactions.mode;
-
-        //    return transactionsViewModel;
-        //}
     }
 }

@@ -19,18 +19,10 @@ namespace Snap_Bank.Services
             accountTable = new AccountTable();
             snapDbContext = new SnapDbContext();
         }
-        public IEnumerable<AccountTable> Get()
-        {
-            return snapDbContext.AccountTables.ToList();
-        }
 
         public bool Save(RegisterViewModel registerViewModel)
         {
             accountTable = map.MapRegisterViewModelToAccountTable(registerViewModel, accountTable);
-            if (accountTable.AccountType == "Current Account")
-                accountTable.HasCurrentAccount = true;
-            else if (accountTable.AccountType == "Savings Account")
-                accountTable.HasSavings=true;
             using (var dbContext = new SnapDbContext())
             {
                 dbContext.AccountTables.Add(accountTable);
@@ -39,12 +31,13 @@ namespace Snap_Bank.Services
             }
             return false;
         }
+
         public void ValidateAccountType(RegisterViewModel registerViewModel)
         {
             var records = snapDbContext.AccountTables.ToList();
             var UserRecords = records.Where(c => c.UserName.Contains(registerViewModel.UserName));
-
         }
+
         public bool CheckUserName(String username)
         {
             var check = snapDbContext.AccountTables.ToList();
@@ -59,7 +52,7 @@ namespace Snap_Bank.Services
         public bool CheckUserPassword(String username, String password)
         {
             var user = (from u in snapDbContext.AccountTables where u.UserName == username select u).FirstOrDefault();
-            if (user.Password == password)
+            if (user!= null && user.Password == password)
             {
                 return true;
             }
@@ -69,47 +62,48 @@ namespace Snap_Bank.Services
         public bool CheckUserPin(int accountnumber, int pin)
         {
             var user = (from u in snapDbContext.AccountTables where u.AccountNumber == accountnumber select u).FirstOrDefault();
-            if (user.Pin == pin)
+            if (user!= null && user.Pin == pin)
             {
                 return true;
             }
             return false;
         }
-        public RegisterViewModel GetUserData(String Username)
+
+        public String GetUserName(int accountnumber)
         {
-            RegisterViewModel viewModel = new RegisterViewModel();
-            var useraccountdata = snapDbContext.AccountTables.Where(s => s.UserName == Username).FirstOrDefault();
-            var userpersonaldata = snapDbContext.personalDetails.Where(s => s.UserId == useraccountdata.UserId).FirstOrDefault();
-            return map.MapAccountTableToRegisterDetailesViewModel(useraccountdata, userpersonaldata, viewModel);
+            var user = (from u in snapDbContext.AccountTables where u.AccountNumber == accountnumber select u).FirstOrDefault();
+            return user.UserName;
         }
-        public RegisterViewModel GetUserData(int AccountNumber)
+
+        public String GetUserNumber(string username)
         {
-            String Username = snapDbContext.AccountTables.Where(s => s.AccountNumber == AccountNumber).FirstOrDefault().UserName;
-            RegisterViewModel viewModel = new RegisterViewModel();
-            var useraccountdata = snapDbContext.AccountTables.Where(s => s.UserName == Username).FirstOrDefault();
-            var userpersonaldata = snapDbContext.personalDetails.Where(s => s.UserId == useraccountdata.UserId).FirstOrDefault();
-            return map.MapAccountTableToRegisterDetailesViewModel(useraccountdata, userpersonaldata, viewModel);
+            var user = (from u in snapDbContext.AccountTables where u.UserName == username select u).FirstOrDefault();
+            return user.AccountNumber.ToString();
         }
+
+        public RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel)
+        {
+            var user = (from u in snapDbContext.AccountTables where u.AccountNumber == accountnumber select u).FirstOrDefault();
+            return map.MapExistingAccountTableToRegisterViewModel(registerViewModel, user);
+        }
+
         public int GetNumberOfUsers(String username)
         {
             var data = snapDbContext.AccountTables.Where(s => s.UserName == username);
             return data.Count();
         }
+
         public int GetNumberOfUsers(int accountnumber)
         {
-            String Username = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault().UserName;
-            var data = snapDbContext.AccountTables.Where(s => s.UserName == Username);
+            var data = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber);
             return data.Count();
         }
+
         public string getUserAccountType(String username)
         {
             return snapDbContext.AccountTables.Where(s => s.UserName == username).FirstOrDefault().AccountType;
         }
-        public string getUserAccountType(int accountnumber)
-        {
-            return snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault().AccountType;
-
-        }
+        
         public HomePageDetailesViewModel GetUserByName(String username)
         {
             HomePageDetailesViewModel homePageDetailesViewModel = new HomePageDetailesViewModel();
@@ -135,6 +129,7 @@ namespace Snap_Bank.Services
             var data = snapDbContext.AccountTables.Where(s => s.UserName == user.UserName);
             if (data.Count() == 2)
             {
+                //error in linqs
                 var userAccountDetailes1 = data.ElementAt(0);
                 var userAccountDetailes2 = data.ElementAt(1);
                 var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.UserId == data.FirstOrDefault().UserId).FirstOrDefault();
@@ -146,40 +141,6 @@ namespace Snap_Bank.Services
                 var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).FirstOrDefault();
                 return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel));
             }
-        }
-
-        public bool Delete(int id)
-        {
-            //using (var ent = new SnapDbContext())
-            //{
-            //    var user = ent.AccountTables.Where(s => s.UserId == id).FirstOrDefault();
-            //    if (user != null)
-            //    {
-            //        ent.AccountTables.Remove(user);
-            //        ent.SaveChanges();
-            //        return true;
-            //    }
-            //}
-            return false;
-        }
-        public bool Put(RegisterViewModel registerViewModel)
-        {
-            //using (var ent = new SnapDbContext())
-            //{
-            //    var temp = ent.AccountTables.Find(accountTable.UserId);
-            //    if (temp != null)
-            //    {
-            //        temp.UserName = accountTable.UserName;
-            //        temp.Password = accountTable.Password;
-            //        temp.AccountNumber = accountTable.AccountNumber;
-            //        temp.Pin = accountTable.Pin;
-            //        temp.SortCode = accountTable.SortCode;
-            //        temp.AccountType = accountTable.AccountType;
-            //    }
-            //    ent.SaveChanges();
-            //    return true;
-            //}
-            return false;
         }
     }
 }

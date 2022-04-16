@@ -18,7 +18,5 @@ namespace Snap_Bank.Models
         public int Pin { get; set; }
         public int SortCode { get; set; }
         public String AccountType { get; set; }
-        public bool HasSavings { get; set; }
-        public bool HasCurrentAccount { get; set; }
     }
 }

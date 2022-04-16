@@ -10,28 +10,30 @@ namespace Snap_Bank.Services
 {
     public interface IAccountTableService
     {
-        IEnumerable<AccountTable> Get();
-
         bool Save(RegisterViewModel registerViewModel);
-        RegisterViewModel GetUserData(String Username);
-        bool CheckUserName(String username);
-        void ValidateAccountType(RegisterViewModel registerViewModel);
-        int GetNumberOfUsers(String username);
-        int GetNumberOfUsers(int accountnumber);
 
-        string getUserAccountType(String username);
-        string getUserAccountType(int accountnumber);
-        RegisterViewModel GetUserData(int AccountNumber);
+        void ValidateAccountType(RegisterViewModel registerViewModel);
+
+        bool CheckUserName(String username);
+
         bool CheckUserPassword(String username, String password);
 
         bool CheckUserPin(int accountnumber, int pin);
 
+        String GetUserName(int accountnumber);
+
+        String GetUserNumber(string username);
+
+        RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel);
+
+        int GetNumberOfUsers(String username);
+
+        int GetNumberOfUsers(int accountnumber);
+
+        string getUserAccountType(String username);
+        
         HomePageDetailesViewModel GetUserByName(String username);
 
         HomePageDetailesViewModel GerUserByNumber(int accountnumber);
-
-        bool Delete(int id);
-
-        bool Put(RegisterViewModel registerViewModel);
     }
 }

@@ -20,11 +20,6 @@ namespace Snap_Bank.Services
             snapDbContext = new SnapDbContext();
         }
 
-        public IEnumerable<PersonalDetails> Get()
-        {
-            return snapDbContext.personalDetails.ToList();
-        }
-
         public bool Save(RegisterViewModel registerViewModel)
         {
             personalDetail = map.MapRegisterViewModelToPersonalDetails(registerViewModel, personalDetail);
@@ -36,38 +31,11 @@ namespace Snap_Bank.Services
             }
             return false;
         }
-        public bool Delete(int id)
+
+        public RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel)
         {
-            using (var ent = new SnapDbContext())
-            {
-                //var user = ent.personalDetails.Where(s => s.UserId == id).FirstOrDefault();
-                //if (user != null)
-                //{
-                //    ent.personalDetails.Remove(user);
-                //    ent.SaveChanges();
-                //    return true;
-                //}
-                return false;
-            }
-        }
-        public bool Put(RegisterViewModel registerViewModel)
-        {
-            //using (var ent = new SnapDbContext())
-            //{
-            //    var temp = ent.personalDetails.Find(personalDetail.UserId);
-            //    if (temp != null)
-            //    {
-            //        temp.FirstName = personalDetail.FirstName;
-            //        temp.LastName = personalDetail.LastName;
-            //        temp.DateOfBirth = personalDetail.DateOfBirth;
-            //        temp.Gender = personalDetail.Gender;
-            //        temp.Gmail = personalDetail.Gmail;
-            //        temp.MobileNumber = personalDetail.MobileNumber;
-            //    }
-            //    ent.SaveChanges();
-            //    return true;
-            //}
-            return false;
+            var user = (from u in snapDbContext.personalDetails where u.AccountNumber == accountnumber select u).FirstOrDefault();
+            return map.MapExistingPersonalDetalisToRegisterViewModel(registerViewModel, user);
         }
     }
 }

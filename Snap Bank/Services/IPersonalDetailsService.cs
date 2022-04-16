@@ -10,13 +10,8 @@ namespace Snap_Bank.Services
 {
     public interface IPersonalDetailsService
     {
-        IEnumerable<PersonalDetails> Get();
-
         bool Save(RegisterViewModel registerViewModel);
 
-        bool Delete(int id);
-
-        bool Put(RegisterViewModel registerViewModel);
-
+        RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel);
     }
 }

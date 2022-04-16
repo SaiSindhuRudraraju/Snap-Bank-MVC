@@ -20,11 +20,6 @@ namespace Snap_Bank.Services
             snapDbContext = new SnapDbContext();
         }
 
-        public IEnumerable<SecurityQuestions> Get()
-        {
-            return snapDbContext.securityQuestions.ToList();
-        }
-
         public bool Save(RegisterViewModel registerViewModel)
         {
             securityQuestion = map.MapRegisterViewModelToSecurityQuestions(registerViewModel, securityQuestion);
@@ -37,35 +32,12 @@ namespace Snap_Bank.Services
             }
             return false;
         }
-        public bool Delete(int id)
+
+        public RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel)
         {
-            using (var ent = new SnapDbContext())
-            {
-                //var user = ent.securityQuestions.Where(s => s.UserId == id).FirstOrDefault();
-                //if (user != null)
-                //{
-                //    ent.securityQuestions.Remove(user);
-                //    ent.SaveChanges();
-                //    return true;
-                //}
-                return false;
-            }
+            var user = (from u in snapDbContext.securityQuestions where u.AccountNumber == accountnumber select u).FirstOrDefault();
+            return map.MapExistingQuestionsToRegisterViewModel(registerViewModel, user);
         }
-        public bool Put(RegisterViewModel registerViewModel)
-        {
-            //using (var ent = new SnapDbContext())
-            //{
-            //    var temp = ent.securityQuestions.Find(securityQuestion.UserId);
-            //    if (temp != null)
-            //    {
-            //        temp.BirthPlace = securityQuestion.BirthPlace;
-            //        temp.PetName = securityQuestion.PetName;
-            //        temp.FavouriteFood = securityQuestion.FavouriteFood;
-            //    }
-            //    ent.SaveChanges();
-            //    return true;
-            //}
-            return false;
-        }
+
     }
 }
