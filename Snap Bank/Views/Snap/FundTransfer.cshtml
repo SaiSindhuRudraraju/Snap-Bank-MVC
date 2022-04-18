@@ -4,6 +4,7 @@
 }
 @section AddToHead
 {
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link href="@Url.Content("~/Content/FundTransfer.css")" rel="stylesheet" type="text/css" />
 }
 <div class="row" style="width: 100%;">
@@ -33,7 +34,10 @@
                                 SERVICE IS OUR MOTO
                             </div>
                             <div class="d-flex justify-content-right h4 font-weight-bold mt-5" style="color: brown;">
-                                BALANCE : £31,142
+                                CURRENT ACCOUNT BALANCE : @ViewBag.CurrentAccountBalance
+                            </div>
+                            <div class="d-flex justify-content-right h4 font-weight-bold mt-5" style="color: brown;">
+                                SAVINGS ACCOUNT BALANCE : @ViewBag.SavingsAccountBalance
                             </div>
                         </div>
                     </div>
@@ -133,23 +137,51 @@
                                     <div class="col">
                                         <div class="">
                                             <label for="floatingTextarea">Enter Account Number</label>
-                                            @Html.EditorFor(model => model.differentAccountTransferModel.AccountNumber, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                            @Html.EditorFor(model => model.differentAccountTransferModel.AccountNumber, new { htmlAttributes = new { @Value = "", @id = "AccountNumber", @class = "form-control form-control-md" } })
                                             @Html.ValidationMessageFor(model => model.differentAccountTransferModel.AccountNumber, "", new { @class = "text-danger" })
                                         </div>
+                                        <script>
+                                            document.getElementById('AccountNumber').addEventListener('input', updateName);
+                                            function updateName(e) {
+                                                if (e.target.value.length == 9) {
+                                                    GetAccountName(e.target.value);
+                                                }
+                                            }
+                                            function GetAccountName(AccountNumber) {
+                                                $.ajax({
+                                                    url: '@Url.Action("GetName", "Snap")',
+                                                    data: { id: AccountNumber },
+                                                  success: function(data){
+                                                      //call is successfully completed and we got result in data
+                                                      console.log(data);
+                                                      document.getElementById('HolderName').value = data;
+                                                      document.getElementById('header').style.color = "black";
+                                                      if (data == "") {
+                                                          document.getElementById('HolderName').value = "No Account Found";
+                                                          document.getElementById('header').style.color = "Red";
+                                                      }
+                                                  },
+                                                  error:function (xhr, ajaxOptions, thrownError){
+                                                      //some errror, some show err msg to user and log the error
+                                                      console.log(xhr.responseText);
+                                                                }
+                                                  });
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="mt-2">
-                                            <label for="floatingTextarea">Enter Account Holder Name : </label>
-                                            @Html.EditorFor(model => model.differentAccountTransferModel.AccountHolder, new { htmlAttributes = new { @class = "form-control form-control-md" } })
-                                            @Html.ValidationMessageFor(model => model.differentAccountTransferModel.AccountHolder, "", new { @class = "text-danger" })
+                                            <label for="floatingTextarea" id="header"> Account Holder Name : </label>
+                                            @Html.EditorFor(model => model.differentAccountTransferModel.AccountHolder, new { htmlAttributes = new { @id = "HolderName", @readonly = "readonly", @Value = ViewBag.AccountHolderName, @class = "form-control form-control-md" } })
+                                            @Html.ValidationMessageFor(model => model.differentAccountTransferModel.AccountHolder, "", new { @id = "NoFounmessage", @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mt-2">
                                             <label for="floatingTextarea">Bank Name : </label>
-                                            @Html.EditorFor(model => model.differentAccountTransferModel.BankName, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                            @Html.EditorFor(model => model.differentAccountTransferModel.BankName, new { htmlAttributes = new { @Value = "Snap Bank", @readonly = "readonly", @class = "form-control form-control-md" } })
                                             @Html.ValidationMessageFor(model => model.differentAccountTransferModel.BankName, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -177,7 +209,7 @@
                                             <div class="mt-0">
                                                 <label for="floatingTextarea" style="font-size:smaller">Transfer Amount in GBP / EUR / DOLLARS</label>
 
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.ConvertedAmount, new { htmlAttributes = new { @id = "TotalAmount", @class = "form-control form-control-md" } })
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.ConvertedAmount, new { htmlAttributes = new { @id = "TotalAmount", @readonly = "readonly", @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.ConvertedAmount, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -192,7 +224,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col col-sd-12 mt-4 mb-3">
-                                                    @Html.EditorFor(model => model.differentAccountTransferModel.ConversionRate, new { htmlAttributes = new { @id = "conversionRate", @class = "form-control form-control-md" } })
+                                                    @Html.EditorFor(model => model.differentAccountTransferModel.ConversionRate, new { htmlAttributes = new { type = "", @id = "conversionRate", @readonly = "readonly", @class = "form-control form-control-md" } })
                                                     @Html.ValidationMessageFor(model => model.differentAccountTransferModel.ConversionRate, "", new { @class = "text-danger" })
 
                                                 </div>
@@ -202,7 +234,7 @@
                                         <div class="col">
                                             <div class="mt-0 mb-3">
                                                 <label for="floatingTextarea">Enter Six-Digit Pin </label>
-                                                @Html.EditorFor(model => model.differentAccountTransferModel.pin, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                                @Html.EditorFor(model => model.differentAccountTransferModel.pin, new { htmlAttributes = new { type = "", @Value = "", @maxlength = 4, @class = "form-control form-control-md" } })
                                                 @Html.ValidationMessageFor(model => model.differentAccountTransferModel.pin, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -210,9 +242,8 @@
 
                                     <div class="d-flex justify-content-right  h3 mb-3"></div>
                                     <div class="button">
-                                        <button type="submit" class="btn btn-primary" style="padding-left: 2.5rem; padding-right: 2.5rem"
-                                                onclick="location.href='/Snap/PaymentSuccess/';">
-                                            CONFIRM PAYMENT
+                                        <button type="submit" class="btn btn-primary" style="padding-left: 2.5rem; padding-right: 2.5rem">
+                                            CONFIRM TRANSFER
                                         </button>
                                     </div>
                                 </div>

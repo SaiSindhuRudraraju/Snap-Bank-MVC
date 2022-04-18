@@ -11,15 +11,12 @@ namespace Snap_Bank.Models
     public class Transactions
     {
         [Key]
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public int AccountNumber { get; set; }
-        public DateTime TransactionDate { get; set; }
-        public decimal FromAccount { get; set; }
         public decimal ToAccount { get; set; }
+        public DateTime TransactionDate { get; set; }
         public decimal Amount { get; set; }
         public bool TransactionCompleted { get; set; }
-        public string mode { get; set; }
         public string TransactionType { get; set; }
-        public string AccountType { get; set; }
     }
 }

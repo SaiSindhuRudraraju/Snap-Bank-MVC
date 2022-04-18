@@ -24,7 +24,7 @@ namespace Snap_Bank.Controllers
             securityQuestionsService = _securityQuestionsService;
             transactionsService = _transactionsService;
         }
-        
+
         //First View available to the user when application run (To login or register)
         public ActionResult Signin()
         {

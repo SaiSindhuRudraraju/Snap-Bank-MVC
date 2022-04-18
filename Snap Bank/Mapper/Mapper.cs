@@ -43,7 +43,7 @@ namespace Snap_Bank.Mapper
 
         public RegisterViewModel MapExistingAccountTableToRegisterViewModel(RegisterViewModel registerViewModel, AccountTable accountTable)
         {
-            if(accountTable.AccountType == "SavingsAccount")
+            if (accountTable.AccountType == "SavingsAccount")
             {
                 registerViewModel.AccountType = "CurrentAccount";
             }
@@ -93,7 +93,17 @@ namespace Snap_Bank.Mapper
             viewModel.RecivedMoneyActivity = null;
             return viewModel;
         }
-
+        public Transactions MapTrannsactionViewModels(int AccountNumber, int toAccount, decimal Amount, string transactiontype, bool transactioncompletes)
+        {
+            Transactions transactions = new Transactions();
+            transactions.AccountNumber = AccountNumber;
+            transactions.ToAccount = toAccount;
+            transactions.TransactionDate= DateTime.Today;
+            transactions.Amount = Amount;
+            transactions.TransactionCompleted =transactioncompletes;
+            transactions.TransactionType = transactiontype;
+            return transactions;
+        }
         public HomePageDetailesViewModel MapAccountTableToHomeDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
         {
             viewModel.AccountNumber = accountTable.AccountNumber;

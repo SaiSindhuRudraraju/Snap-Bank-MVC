@@ -53,6 +53,29 @@ namespace Snap_Bank.Controllers
             fundTransferViewModel.differentAccountTransferModel.sortcode1 =12;
             fundTransferViewModel.differentAccountTransferModel.sortcode2 =93;
             fundTransferViewModel.differentAccountTransferModel.sortcode3 =64;
+            var user = (crediantials)Session["user"];
+            var username = "";
+            if (user.username == null)
+            {
+                username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+            }
+            else
+            {
+                username = user.username;
+            }
+            if (accountTableService.GetNumberOfUsers(username) == 2)
+            {
+                ViewBag.CurrentAccountBalance = accountTableService.GetCurrentAccountAmount(username);
+                ViewBag.SavingsAccountBalance = accountTableService.GetSavingAccountAmount(username);
+            }
+            try
+            {
+                ViewBag.CurrentAccountBalance = accountTableService.GetCurrentAccountAmount(username);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.SavingsAccountBalance = accountTableService.GetSavingAccountAmount(username);
+            }
             return View(fundTransferViewModel);
         }
 
@@ -61,7 +84,23 @@ namespace Snap_Bank.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Redirect("PaymentSuccess");
+                var user = (crediantials)Session["user"];
+                var username = "";
+                if (user.username == null)
+                {
+                    username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+                }
+                else
+                {
+                    username = user.username;
+                }
+                var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.selfAccountViewModel.FromAccountType);
+                var toAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.selfAccountViewModel.ToAccountType);
+                bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.selfAccountViewModel, fromAccountNumber, toAccountNumber);
+                if (status ==true)
+                    return Redirect("PaymentSuccess");
+                else
+                    return Redirect("PaymentUnsuccess");
             }
             return View(fundTransferViewModel);
         }
@@ -71,7 +110,23 @@ namespace Snap_Bank.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Redirect("PaymentSuccess");
+                var user = (crediantials)Session["user"];
+                var username = "";
+                if (user.username == null)
+                {
+                    username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+                }
+                else
+                {
+                    username = user.username;
+                }
+                var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.differentAccountTransferModel.FromAccountType);
+                var toAccountNumber = fundTransferViewModel.differentAccountTransferModel.AccountNumber;
+                bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.differentAccountTransferModel, fromAccountNumber, (int)toAccountNumber);
+                if (status ==true)
+                    return Redirect("PaymentSuccess");
+                else
+                    return Redirect("PaymentUnsuccess");
             }
             return View(fundTransferViewModel);
         }
@@ -82,7 +137,7 @@ namespace Snap_Bank.Controllers
             var user = (crediantials)Session["user"];
             //Getting username first whatever the login details be
             String username;
-            if(user.AccountNumber !=null)
+            if (user.AccountNumber !=null)
             {
                 username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
             }
@@ -134,7 +189,7 @@ namespace Snap_Bank.Controllers
                 exsistingAccountNumber = user.AccountNumber;
             }
 
-            registerViewModel = accountTableService.GetUserDetails(int.Parse(exsistingAccountNumber),registerViewModel);
+            registerViewModel = accountTableService.GetUserDetails(int.Parse(exsistingAccountNumber), registerViewModel);
             registerViewModel = personalDetailsService.GetUserDetails(int.Parse(exsistingAccountNumber), registerViewModel);
             registerViewModel = securityQuestionsService.GetUserDetails(int.Parse(exsistingAccountNumber), registerViewModel);
             registerViewModel.ConfirmPassword = registerViewModel.Password;
@@ -165,6 +220,13 @@ namespace Snap_Bank.Controllers
             homePageDetailesViewModel.NumberOfAccounts = numberOfAccounts;
             return View(homePageDetailesViewModel);
         }
+        public String GetName(int id)
+        {
+            var name = accountTableService.GetUserName(id);
+            if (name != null)
+                return name.ToString();
+            return null;
+        }
 
         public ActionResult ForgetPassword()
         {
@@ -180,6 +242,10 @@ namespace Snap_Bank.Controllers
             return View();
         }
         public ActionResult PaymentSuccess()
+        {
+            return View();
+        }
+        public ActionResult PaymentUnsuccess()
         {
             return View();
         }
