@@ -63,19 +63,11 @@ namespace Snap_Bank.Controllers
             {
                 username = user.username;
             }
-            if (accountTableService.GetNumberOfUsers(username) == 2)
-            {
-                ViewBag.CurrentAccountBalance = accountTableService.GetCurrentAccountAmount(username);
-                ViewBag.SavingsAccountBalance = accountTableService.GetSavingAccountAmount(username);
-            }
-            try
-            {
-                ViewBag.CurrentAccountBalance = accountTableService.GetCurrentAccountAmount(username);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.SavingsAccountBalance = accountTableService.GetSavingAccountAmount(username);
-            }
+
+            ViewBag.CurrentAccountBalance = accountTableService.GetCurrentAccountAmount(username);
+            ViewBag.SavingsAccountBalance = accountTableService.GetSavingAccountAmount(username);
+
+
             return View(fundTransferViewModel);
         }
 

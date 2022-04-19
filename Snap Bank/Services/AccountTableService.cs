@@ -103,11 +103,17 @@ namespace Snap_Bank.Services
         }
         public decimal GetCurrentAccountAmount(string username)
         {
-            return snapDbContext.AccountTables.Where(s => s.UserName == username && s.AccountType == "CurrentAccount").FirstOrDefault().Amount;
+            var userdata = snapDbContext.AccountTables.Where(s => s.UserName == username && s.AccountType == "CurrentAccount").FirstOrDefault();
+            if (userdata == null)
+                return 0;
+            return userdata.Amount;
         }
         public decimal GetSavingAccountAmount(string username)
         {
-            return snapDbContext.AccountTables.Where(s => s.UserName == username && s.AccountType == "SavingsAccount").FirstOrDefault().Amount;
+            var userdata = snapDbContext.AccountTables.Where(s => s.UserName == username && s.AccountType == "SavingsAccount").FirstOrDefault();
+            if (userdata == null)
+                return 0;
+            return userdata.Amount;
         }
         public void ValidateAccountType(RegisterViewModel registerViewModel)
         {
