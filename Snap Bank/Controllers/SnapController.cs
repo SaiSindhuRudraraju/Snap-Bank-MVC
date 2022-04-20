@@ -97,10 +97,13 @@ namespace Snap_Bank.Controllers
             return View(fundTransferViewModel);
         }
 
+        //public ActionResult DifferentAccounFundTransfer(FundTransferViewModel fundTransferViewModel)
+        //{
+        //    return Redirect("DifferentAccounFundTransfer");
+        //}
         [HttpPost]
         public ActionResult DifferentAccounFundTransfer(FundTransferViewModel fundTransferViewModel)
         {
-
             var user = (crediantials)Session["user"];
             var username = "";
             if (user.username == null)
@@ -206,11 +209,12 @@ namespace Snap_Bank.Controllers
             }
             else if (user.AccountNumber != null)
             {
-                homePageDetailesViewModel = accountTableService.GerUserByNumber(int.Parse(user.AccountNumber));
+                homePageDetailesViewModel = accountTableService.GetUserByName(accountTableService.GetUserName(int.Parse(user.AccountNumber)));
             }
             homePageDetailesViewModel.NumberOfAccounts = numberOfAccounts;
             return View(homePageDetailesViewModel);
         }
+
         public String GetName(int id)
         {
             var name = accountTableService.GetUserName(id);

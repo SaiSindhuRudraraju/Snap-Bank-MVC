@@ -25,7 +25,7 @@ namespace Snap_Bank.Mapper
             personalDetails.AccountNumber = viewModel.AccountNumber;
             personalDetails.FirstName = viewModel.FirstName;
             personalDetails.LastName = viewModel.LastName;
-            personalDetails.DateOfBirth = viewModel.DateOfBirth;
+            personalDetails.DateOfBirth = (DateTime)viewModel.DateOfBirth;
             personalDetails.Gender = viewModel.Gender;
             personalDetails.Gmail = viewModel.Email;
             personalDetails.MobileNumber = viewModel.Phone;
