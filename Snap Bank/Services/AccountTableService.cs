@@ -188,14 +188,25 @@ namespace Snap_Bank.Services
             {
                 var userAccountDetailes1 = data[0];
                 var userAccountDetailes2 = data[1];
+                List<Transactions> listoftransactions = null;
+                if (data[0].AccountType == "CurrentAccount")
+                {
+                    listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == userAccountDetailes1.AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
+                }
+                else
+                {
+                    listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == userAccountDetailes2.AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
+                }
+
                 var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.UserId == userAccountDetailes1.UserId).FirstOrDefault();
-                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel);
+                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel, listoftransactions);
             }
             else
             {
                 var userAccountDetailes = data.FirstOrDefault();
                 var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).FirstOrDefault();
-                return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel));
+                var listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
+                return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel, listoftransactions));
             }
         }
         public HomePageDetailesViewModel GerUserByNumber(int accountnumber)
@@ -203,19 +214,28 @@ namespace Snap_Bank.Services
             HomePageDetailesViewModel homePageDetailesViewModel = new HomePageDetailesViewModel();
             var user = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
             var data = snapDbContext.AccountTables.Where(s => s.UserName == user.UserName).ToList();
+            List<Transactions> listoftransactions = null;
             if (data.Count() == 2)
             {
-                //error in linqs
+                if (data[0].AccountType == "CurrentAccount")
+                {
+                    listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == data[0].AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
+                }
+                else
+                {
+                    listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == data[1].AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
+                }
                 var userAccountDetailes1 = data[0];
                 var userAccountDetailes2 = data[1];
                 var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.UserId == userAccountDetailes1.UserId).FirstOrDefault();
-                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel);
+                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel, listoftransactions);
             }
             else
             {
                 var userAccountDetailes = data.FirstOrDefault();
                 var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).FirstOrDefault();
-                return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel));
+                listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
+                return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel, listoftransactions));
             }
         }
     }

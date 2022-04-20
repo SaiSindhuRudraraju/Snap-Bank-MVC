@@ -100,26 +100,25 @@ namespace Snap_Bank.Controllers
         [HttpPost]
         public ActionResult DifferentAccounFundTransfer(FundTransferViewModel fundTransferViewModel)
         {
-            if (ModelState.IsValid)
+
+            var user = (crediantials)Session["user"];
+            var username = "";
+            if (user.username == null)
             {
-                var user = (crediantials)Session["user"];
-                var username = "";
-                if (user.username == null)
-                {
-                    username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
-                }
-                else
-                {
-                    username = user.username;
-                }
-                var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.differentAccountTransferModel.FromAccountType);
-                var toAccountNumber = fundTransferViewModel.differentAccountTransferModel.AccountNumber;
-                bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.differentAccountTransferModel, fromAccountNumber, (int)toAccountNumber);
-                if (status ==true)
-                    return Redirect("PaymentSuccess");
-                else
-                    return Redirect("PaymentUnsuccess");
+                username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
             }
+            else
+            {
+                username = user.username;
+            }
+            var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.differentAccountTransferModel.FromAccountType);
+            var toAccountNumber = fundTransferViewModel.differentAccountTransferModel.AccountNumber;
+            bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.differentAccountTransferModel, fromAccountNumber, (int)toAccountNumber);
+            if (status ==true)
+                return Redirect("PaymentSuccess");
+            else
+                return Redirect("PaymentUnsuccess");
+
             return View(fundTransferViewModel);
         }
 

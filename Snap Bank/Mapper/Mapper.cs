@@ -77,7 +77,7 @@ namespace Snap_Bank.Mapper
             return registerViewModel;
         }
 
-        public HomePageDetailesViewModel MapUserAccountPersonalAccountToHomePage(AccountTable account1, AccountTable account2, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
+        public HomePageDetailesViewModel MapUserAccountPersonalAccountToHomePage(AccountTable account1, AccountTable account2, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel, List<Transactions> listoftransactions)
         {
             viewModel.AccountNumber =account1.AccountNumber;
             viewModel.AccountNumber2 = account2.AccountNumber;
@@ -91,6 +91,7 @@ namespace Snap_Bank.Mapper
             viewModel.AccountActivity = null;
             viewModel.SentMoneyActivity = null;
             viewModel.RecivedMoneyActivity = null;
+            viewModel.AccountActivity = listoftransactions;
             return viewModel;
         }
         public Transactions MapTrannsactionViewModels(int AccountNumber, int toAccount, decimal Amount, string transactiontype, bool transactioncompletes)
@@ -104,7 +105,7 @@ namespace Snap_Bank.Mapper
             transactions.TransactionType = transactiontype;
             return transactions;
         }
-        public HomePageDetailesViewModel MapAccountTableToHomeDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel)
+        public HomePageDetailesViewModel MapAccountTableToHomeDetailesViewModel(AccountTable accountTable, PersonalDetails personalDetails, HomePageDetailesViewModel viewModel, List<Transactions> transactions)
         {
             viewModel.AccountNumber = accountTable.AccountNumber;
             viewModel.LastDigits = accountTable.AccountNumber%10000;
@@ -115,6 +116,7 @@ namespace Snap_Bank.Mapper
             viewModel.AccountActivity = null;
             viewModel.SentMoneyActivity = null;
             viewModel.RecivedMoneyActivity = null;
+            viewModel.AccountActivity = transactions;
             return viewModel;
         }
     }

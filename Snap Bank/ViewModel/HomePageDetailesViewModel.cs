@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snap_Bank.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace Snap_Bank.ViewModel
         public string AccountType2 { get; set; }
         public int LastDigits { get; set; }
         public int LastDigits2 { get; set; }
-        public List<String> AccountActivity { get; set; }
-        public List<String> SentMoneyActivity { get; set; }
-        public List<String> RecivedMoneyActivity { get; set; }
+        public List<Transactions> AccountActivity { get; set; }
+        public List<Transactions> SentMoneyActivity { get; set; }
+        public List<Transactions> RecivedMoneyActivity { get; set; }
     }
 }
