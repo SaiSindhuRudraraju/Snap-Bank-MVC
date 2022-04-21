@@ -39,5 +39,15 @@ namespace Snap_Bank.Services
             return map.MapExistingQuestionsToRegisterViewModel(registerViewModel, user);
         }
 
+        public bool VerifyAnswers(CheckSecurityQuestions answers,int accountnumber)
+        {
+            var user = (from u in snapDbContext.securityQuestions where u.AccountNumber == accountnumber select u).FirstOrDefault();
+            if(user.BirthPlace==answers.birthPlace && user.PetName == answers.petName && user.FavouriteFood == answers.FavouritFood)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

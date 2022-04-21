@@ -15,6 +15,7 @@ namespace Snap_Bank.Controllers
         IPersonalDetailsService personalDetailsService;
         ISecurityQuestionsService securityQuestionsService;
         ITransactionsService transactionsService;
+        String username;
 
         //Constructor to get instance of service
         public LoginController(IAccountTableService _accountTableService, IPersonalDetailsService _personalDetailsService, ISecurityQuestionsService _securityQuestionsService, ITransactionsService _transactionsService)
@@ -129,6 +130,7 @@ namespace Snap_Bank.Controllers
         {
             return View(new QuestionsViewModel());
         }
+
         //When Clicked Submit in the Questions Page to Save User's first account Data in the database
         [HttpPost]
         public ActionResult Questions(QuestionsViewModel questionsViewModel)
@@ -146,8 +148,44 @@ namespace Snap_Bank.Controllers
             }
             return View("Signin");
         }
-        public ActionResult ForgetPassword()
+
+        public ActionResult ForgetPassword(ForgetPasswordModel forgetPasswordModel)
         {
+            if (ModelState.IsValid)
+            {
+                if (forgetPasswordModel.securityQuestions != null)
+                {
+                    forgetPasswordModel.securityQuestions.isMatched = securityQuestionsService.VerifyAnswers(forgetPasswordModel.securityQuestions, int.Parse(accountTableService.GetUserNumber(forgetPasswordModel.securityQuestions.username)));
+                    if (forgetPasswordModel.securityQuestions.isMatched)
+                    {
+                        forgetPasswordModel.newPasswords = new NewPasswords();
+                        forgetPasswordModel.newPasswords.username = forgetPasswordModel.securityQuestions.username;
+                        return View("ChangePassword", forgetPasswordModel);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("securityQuestions.username", "Your UserName and Answers doesnot match!. Enter Correct Answers");
+                        return View(forgetPasswordModel);
+                    }
+                }
+            }
+            return View();
+        }
+
+        public ActionResult ChangePassword(ForgetPasswordModel forgetPasswordModel)
+        {
+            int count = accountTableService.GetNumberOfUsers(forgetPasswordModel.newPasswords.username);
+            if(count == 2)
+            {
+                accountTableService.UpdatePassword(accountTableService.GetAccountNumber(forgetPasswordModel.newPasswords.username, "SavingsAccount"), forgetPasswordModel.newPasswords.password);
+                accountTableService.UpdatePassword(accountTableService.GetAccountNumber(forgetPasswordModel.newPasswords.username, "CurrentAccount"), forgetPasswordModel.newPasswords.password);
+                return View("Signin");
+            }
+            else
+            {
+                accountTableService.UpdatePassword(accountTableService.GetAccountNumber(forgetPasswordModel.newPasswords.username, accountTableService.getUserAccountType(forgetPasswordModel.newPasswords.username)), forgetPasswordModel.newPasswords.password);
+                return View("Signin");
+            }
             return View();
         }
     }

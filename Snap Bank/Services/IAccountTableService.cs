@@ -41,5 +41,6 @@ namespace Snap_Bank.Services
         decimal GetSavingAccountAmount(string username);
         decimal GetCurrentAccountAmount(string username);
         int GetAccountNumber(string username, string AccountType);
+        void UpdatePassword(int accountnumber, string newPassword);
     }
 }
