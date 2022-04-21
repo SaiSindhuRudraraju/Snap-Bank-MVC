@@ -22,15 +22,15 @@
                 <a class="active" href="/Snap/Support">
                     <img src="~/Images/support.png" alt="" />
                 </a>
-                
-                    <a class="active" href="/Login/Signin">
-                        <img src="~/Images/log-out.png" alt=""  onclick="ClearSessions()"/>
-                    </a>
-               <script>
-                   function ClearSessions() {
-                       sessionStorage.clear();
-                   }
-               </script>
+
+                <a class="active" href="/Login/Signin">
+                    <img src="~/Images/log-out.png" alt="" onclick="ClearSessions()" />
+                </a>
+                <script>
+                    function ClearSessions() {
+                        sessionStorage.clear();
+                    }
+                </script>
 
             </div>
         </div>
@@ -209,7 +209,7 @@
                                             <div class="d-flex justify-content-around m-4">
                                                 @if (data.TransactionType == "credit")
                                                 {
-                                                <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
+                                                    <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
                                                     <h6> +£@data.Amount</h6>
                                                 }
                                             </div>

@@ -223,6 +223,7 @@
     <Compile Include="Services\TransactionsService.cs" />
     <Compile Include="SnapDbContext.cs" />
     <Compile Include="ViewModel\crediantials.cs" />
+    <Compile Include="ViewModel\ForgerPasswordModel.cs" />
     <Compile Include="ViewModel\FundTransferViewModel.cs" />
     <Compile Include="ViewModel\HomePageDetailesViewModel.cs" />
     <Compile Include="ViewModel\QuestionsViewModel.cs" />
@@ -266,6 +267,7 @@
     <Content Include="Views\Snap\PaymentUnsuccess.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Login\ForgetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

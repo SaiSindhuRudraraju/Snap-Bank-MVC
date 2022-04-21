@@ -129,7 +129,6 @@ namespace Snap_Bank.Controllers
         {
             return View(new QuestionsViewModel());
         }
-
         //When Clicked Submit in the Questions Page to Save User's first account Data in the database
         [HttpPost]
         public ActionResult Questions(QuestionsViewModel questionsViewModel)
@@ -146,6 +145,10 @@ namespace Snap_Bank.Controllers
                 securityQuestionsService.Save(viewModel);
             }
             return View("Signin");
+        }
+        public ActionResult ForgetPassword()
+        {
+            return View();
         }
     }
 }
