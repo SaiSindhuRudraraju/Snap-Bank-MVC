@@ -169,13 +169,11 @@
                                         @foreach (var data in Model.AccountActivity)
                                         {
                                             <div class="d-flex justify-content-around m-4">
-
                                                 @if (data.TransactionType == "Debit")
                                                 {
                                                     <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
                                                     <h6>  -£@data.Amount</h6><br />
                                                 }
-
                                             </div>
                                         }
 
