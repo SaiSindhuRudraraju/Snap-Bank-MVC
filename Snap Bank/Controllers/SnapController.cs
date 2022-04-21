@@ -157,6 +157,11 @@ namespace Snap_Bank.Controllers
         }
 
         //Adding Second Account In Settings Page
+
+        public void logout()
+        {
+            Session.RemoveAll();
+        }
         public ActionResult AddAnotherAccount()
         {
             var user = (crediantials)Session["user"];
@@ -206,7 +211,7 @@ namespace Snap_Bank.Controllers
             }
             else if (user.AccountNumber != null)
             {
-                homePageDetailesViewModel = accountTableService.GerUserByNumber(int.Parse(user.AccountNumber));
+                homePageDetailesViewModel = accountTableService.GetUserByNumber(int.Parse(user.AccountNumber));
             }
             homePageDetailesViewModel.NumberOfAccounts = numberOfAccounts;
             return View(homePageDetailesViewModel);
@@ -230,7 +235,34 @@ namespace Snap_Bank.Controllers
 
         public ActionResult AccountActivity()
         {
-            return View();
+            var user = (crediantials)Session["user"];
+            String username;
+            if (user.AccountNumber !=null)
+            {
+                username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+            }
+            else
+            {
+                username = user.username;
+            }
+            List<Transactions> list = transactionsService.Get(int.Parse(accountTableService.GetUserNumber(username)));
+            return View(list);
+        }
+        public ActionResult GetTransactions(String id)
+        {
+            var user = (crediantials)Session["user"];
+            String username;
+            if (user.AccountNumber !=null)
+            {
+                username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+            }
+            else
+            {
+                username = user.username;
+            }
+            int AccountNumber = accountTableService.GetAccountNumber(username, id);
+            List<Transactions> list = transactionsService.Get(AccountNumber);
+            return View("AccountActivity", list);
         }
         public ActionResult PaymentSuccess()
         {

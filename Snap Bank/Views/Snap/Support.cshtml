@@ -22,8 +22,13 @@
                     <img src="~/Images/home.png" alt="" />
                 </a>
                 <a class="active" href="/Snap/Index/">
-                    <img src="~/Images/log-out.png" alt="" />
+                    <img src="~/Images/log-out.png" alt="" onclick="ClearSessions()" />
                 </a>
+                <script>
+                    function ClearSessions() {
+                        sessionStorage.clear();
+                    }
+                </script>
             </div>
         </div>
     </div>

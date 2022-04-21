@@ -15,11 +15,16 @@ namespace Snap_Bank.Services
             snapDbContext = new SnapDbContext();
         }
 
-        public IEnumerable<Transactions> Get()
+        public List<Transactions> Get(int AccountNumber)
         {
-            return snapDbContext.transactions.ToList();
+            var list = snapDbContext.transactions.Where(s => s.AccountNumber == AccountNumber).ToList();
+            return list;
         }
-
+        public List<Transactions> GetTransferDetailesByType(int AccountNumber, String AccountType)
+        {
+            var list = snapDbContext.transactions.Where(s => s.AccountNumber == AccountNumber).ToList();
+            return list;
+        }
         public bool Save(Transactions transaction)
         {
             using (var dbContext = new SnapDbContext())

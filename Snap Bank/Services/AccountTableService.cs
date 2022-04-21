@@ -35,6 +35,17 @@ namespace Snap_Bank.Services
         {
             return snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == AccountType).FirstOrDefault().AccountNumber;
         }
+        public int GetAccountNumber(string username, string AccountType)
+        {
+            if (AccountType == "Savings")
+            {
+                return snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == "SavingsAccount").FirstOrDefault().AccountNumber;
+            }
+            else
+            {
+                return snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == "CurrentAccount").FirstOrDefault().AccountNumber;
+            }
+        }
         public bool TransferAmountFromTo(SelfAccountTransferViewModel selfAccountViewModel, int fromAccount, int toAccount)
         {
             decimal totalamount = snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount;
@@ -209,34 +220,12 @@ namespace Snap_Bank.Services
                 return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel, listoftransactions));
             }
         }
-        public HomePageDetailesViewModel GerUserByNumber(int accountnumber)
+        public HomePageDetailesViewModel GetUserByNumber(int accountnumber)
         {
             HomePageDetailesViewModel homePageDetailesViewModel = new HomePageDetailesViewModel();
             var user = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
             var data = snapDbContext.AccountTables.Where(s => s.UserName == user.UserName).ToList();
-            List<Transactions> listoftransactions = null;
-            if (data.Count() == 2)
-            {
-                if (data[0].AccountType == "CurrentAccount")
-                {
-                    listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == data[0].AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
-                }
-                else
-                {
-                    listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == data[1].AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
-                }
-                var userAccountDetailes1 = data[0];
-                var userAccountDetailes2 = data[1];
-                var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.UserId == userAccountDetailes1.UserId).FirstOrDefault();
-                return map.MapUserAccountPersonalAccountToHomePage(userAccountDetailes1, userAccountDetailes2, userPersonalDetailes, homePageDetailesViewModel, listoftransactions);
-            }
-            else
-            {
-                var userAccountDetailes = data.FirstOrDefault();
-                var userPersonalDetailes = snapDbContext.personalDetails.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).FirstOrDefault();
-                listoftransactions = snapDbContext.transactions.Where(s => s.AccountNumber == userAccountDetailes.AccountNumber).OrderByDescending(s => s.Id).Take(5).ToList();
-                return (map.MapAccountTableToHomeDetailesViewModel(userAccountDetailes, userPersonalDetailes, homePageDetailesViewModel, listoftransactions));
-            }
+            return GetUserByName(user.UserName);
         }
     }
 }

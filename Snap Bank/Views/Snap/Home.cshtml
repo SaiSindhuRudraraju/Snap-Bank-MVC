@@ -22,9 +22,16 @@
                 <a class="active" href="/Snap/Support">
                     <img src="~/Images/support.png" alt="" />
                 </a>
-                <a class="active" href="/Login/Signin">
-                    <img src="~/Images/log-out.png" alt="" />
-                </a>
+                
+                    <a class="active" href="/Login/Signin">
+                        <img src="~/Images/log-out.png" alt=""  onclick="ClearSessions()"/>
+                    </a>
+               <script>
+                   function ClearSessions() {
+                       sessionStorage.clear();
+                   }
+               </script>
+
             </div>
         </div>
     </div>
@@ -121,7 +128,7 @@
                                         @foreach (var data in Model.AccountActivity)
                                         {
                                             <div class="d-flex justify-content-around m-4">
-                                                <h4>@data.AccountNumber</h4>
+                                                <h4>@Decimal.ToInt32(@data.ToAccount)</h4>
                                                 @if (data.TransactionType == "credit")
                                                 {
                                                     <h4>+£@data.Amount</h4>
@@ -165,7 +172,7 @@
 
                                                 @if (data.TransactionType == "Debit")
                                                 {
-                                                    <h6>@data.AccountNumber</h6>
+                                                    <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
                                                     <h6>  -£@data.Amount</h6><br />
                                                 }
 
@@ -184,31 +191,31 @@
                                             <p class="h5">RECEIVED MONEY</p>
                                         </div>
                                         @*@<div class="d-flex justify-content-around m-4">
-                                            <p class="h6">STEVE</p>
-                                            <p class="h6">£500</p>
-                                        </div>
-                                        <div class="d-flex justify-content-around m-4">
-                                            <p class="h6">SANJAY</p>
-                                            <p class="h6">£100</p>
-                                        </div>
-                                        <div class="d-flex justify-content-around m-4">
-                                            <p class="h6">ALEX</p>
-                                            <p class="h6">£1500</p>
-                                        </div>
-                                        <div class="d-flex justify-content-around m-4">
-                                            <p class="h6">JAMES</p>
-                                            <p class="h6">£700</p>
-                                        </div>*@
-                                            @foreach (var data in Model.AccountActivity)
-                                            {
-                                                <div class="d-flex justify-content-around m-4">
-                                                    @if (data.TransactionType == "credit")
-                                                    {
-                                                        <h6>@data.AccountNumber</h6>
-                                                        <h6> +£@data.Amount</h6>
-                                                    }
-                                                </div>
-                                            }
+                                                <p class="h6">STEVE</p>
+                                                <p class="h6">£500</p>
+                                            </div>
+                                            <div class="d-flex justify-content-around m-4">
+                                                <p class="h6">SANJAY</p>
+                                                <p class="h6">£100</p>
+                                            </div>
+                                            <div class="d-flex justify-content-around m-4">
+                                                <p class="h6">ALEX</p>
+                                                <p class="h6">£1500</p>
+                                            </div>
+                                            <div class="d-flex justify-content-around m-4">
+                                                <p class="h6">JAMES</p>
+                                                <p class="h6">£700</p>
+                                            </div>*@
+                                        @foreach (var data in Model.AccountActivity)
+                                        {
+                                            <div class="d-flex justify-content-around m-4">
+                                                @if (data.TransactionType == "credit")
+                                                {
+                                                <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
+                                                    <h6> +£@data.Amount</h6>
+                                                }
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>

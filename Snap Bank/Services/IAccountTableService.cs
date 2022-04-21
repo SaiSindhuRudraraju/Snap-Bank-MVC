@@ -34,11 +34,12 @@ namespace Snap_Bank.Services
 
         HomePageDetailesViewModel GetUserByName(String username);
 
-        HomePageDetailesViewModel GerUserByNumber(int accountnumber);
+        HomePageDetailesViewModel GetUserByNumber(int accountnumber);
         bool TransferAmountFromTo(SelfAccountTransferViewModel selfAccountViewModel, int fromAccount, int toAccount);
         bool TransferAmountFromTo(DifferentAccountTransferModel differentAccountTransferModel, int fromAccount, int toAccount);
         int GetAccountNumberByAccountType(string username, string AccountType);
         decimal GetSavingAccountAmount(string username);
         decimal GetCurrentAccountAmount(string username);
+        int GetAccountNumber(string username, string AccountType);
     }
 }

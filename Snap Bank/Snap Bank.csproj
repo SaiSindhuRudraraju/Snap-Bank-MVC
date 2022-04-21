@@ -50,6 +50,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -176,6 +179,7 @@
     <Content Include="Content\AccountActivity.css" />
     <Content Include="Content\ForgetPassword.css" />
     <Content Include="Content\FundTransfer.css" />
+    <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\Home.css" />
     <Content Include="Content\PaymentSuccess.css" />
     <Content Include="Content\Register.css" />
@@ -188,6 +192,9 @@
     <Content Include="obj\Debug\Snap Bank.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\Snap Bank.dll" />
     <Content Include="obj\Debug\Snap Bank.pdb" />
+    <Content Include="Scripts\gridmvc.js" />
+    <Content Include="Scripts\gridmvc.lang.ru.js" />
+    <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +246,7 @@
     <Content Include="obj\Debug\Snap Bank.csproj.CopyComplete" />
     <Content Include="obj\Debug\Snap Bank.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\Snap Bank.csprojAssemblyReference.cache" />
+    <Content Include="Grid.mvc.readme" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -256,6 +264,8 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\Questions.cshtml" />
     <Content Include="Views\Snap\PaymentUnsuccess.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
