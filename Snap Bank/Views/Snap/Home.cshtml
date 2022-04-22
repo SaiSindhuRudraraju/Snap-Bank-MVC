@@ -131,11 +131,11 @@
                                                 <h4>@Decimal.ToInt32(@data.ToAccount)</h4>
                                                 @if (data.TransactionType == "credit")
                                                 {
-                                                    <h4>+£@data.Amount</h4>
+                                                    <h5>+£@data.Amount</h5>
                                                 }
                                                 else
                                                 {
-                                                    <h4>-£@data.Amount</h4>
+                                                    <h5>-£@data.Amount</h5>
                                                 }
                                             </div>
                                         }
@@ -144,35 +144,20 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-sd-12 d-flex justify-content-center">
-                            <div class="card border-3 main-card" style="cursor: pointer;margin: 12% 0%;padding: 0% 15%;">
+                            <div class="card border-3 main-card" style="cursor: pointer;margin: 12% 0%;padding: 0% 10%;">
                                 <div class="card-body" onclick="location.href='/Snap/FundTransfer/';">
                                     <div class="text-container">
                                         <div class="d-flex justify-content-center mt-3 mb-5">
                                             <p class="h4">SEND MONEY</p>
                                         </div>
-                                        @*<div class="d-flex justify-content-around m-4">
-                                                <p class="h6">STEVE</p>
-                                                <p class="h6">£500</p>
-                                            </div>
-                                            <div class="d-flex justify-content-around m-4">
-                                                <p class="h6">SANJAY</p>
-                                                <p class="h6">£100</p>
-                                            </div>
-                                            <div class="d-flex justify-content-around m-4">
-                                                <p class="h6">ALEX</p>
-                                                <p class="h6">1£500</p>
-                                            </div>
-                                            <div class="d-flex justify-content-around m-4">
-                                                <p class="h6">JAMES</p>
-                                                <p class="h6">£700</p>
-                                            </div>*@
+                                        
                                         @foreach (var data in Model.AccountActivity)
                                         {
-                                            <div class="d-flex justify-content-around m-4">
+                                            <div class="d-flex justify-content-around m-2">
                                                 @if (data.TransactionType == "Debit")
                                                 {
-                                                    <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
-                                                    <h6>  -£@data.Amount</h6><br />
+                                                <h6>@Decimal.ToInt32(@data.ToAccount) &nbsp; - £@data.Amount</h6>
+                                                    <br />
                                                 }
                                             </div>
                                         }
@@ -182,7 +167,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-sd-12 d-flex justify-content-center">
-                            <div class="card border-3 main-card" style="cursor: pointer;margin: 12% 0%;padding: 0% 15%;">
+                            <div class="card border-3 main-card" style="cursor: pointer;margin: 12% 0%;padding: 0% 10%;">
                                 <div class="card-body">
                                     <div class="text-container">
                                         <div class="d-flex justify-content-center mt-3 mb-5">
@@ -206,11 +191,11 @@
                                             </div>*@
                                         @foreach (var data in Model.AccountActivity)
                                         {
-                                            <div class="d-flex justify-content-around m-4">
+                                            <div class="d-flex justify-content-around m-2">
                                                 @if (data.TransactionType == "credit")
                                                 {
-                                                    <h6>@Decimal.ToInt32(@data.ToAccount)</h6>
-                                                    <h6> +£@data.Amount</h6>
+                                                <h6>@Decimal.ToInt32(@data.ToAccount) &nbsp;  +£@data.Amount</h6>
+                                                   
                                                 }
                                             </div>
                                         }
