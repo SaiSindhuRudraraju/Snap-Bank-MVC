@@ -42,21 +42,7 @@
                         <input type="radio" class="m-2" name="account" id="account" value="Current" onclick="GetTransferDetailes(this.value)">
                         CURRENT ACCOUNT
                     </div>
-                    <script>
-                        function GetTransferDetailes(AccountType) {
-                             $.ajax({
-                                 url: '@Url.Action("GetTransactions", "Snap")',
-                                 data: { id: AccountType },
-                                 success: function(data){
 
-                                  },
-                                  error:function (xhr, ajaxOptions, thrownError){
-                                       console.log(xhr.responseText);
-                                  }
-                             });
-                            console.log(AccountType);
-                         }
-                    </script>
                     <div class="d-flex justify-content-around mt-5 row">
                         <div class="col-4">
                             <p class="h5">CLOSING BALANCE: <b> £31,142</b></p>
