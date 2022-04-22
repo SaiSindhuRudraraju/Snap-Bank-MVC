@@ -13,5 +13,7 @@ namespace Snap_Bank.Services
         bool Save(RegisterViewModel registerViewModel);
 
         RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel);
+
+        void UpdateDetails(int accountnumber, string gmail, string mobilenumber);
     }
 }

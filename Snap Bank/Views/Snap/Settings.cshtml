@@ -22,7 +22,7 @@
                 <a class="active" href="/Snap/Support/">
                     <img src="~/Images/support.png" alt="" />
                 </a>
-                <a class="active" href="/Snap/Index/">
+                <a class="active" href="/Login/Signin/">
                     <img src="~/Images/log-out.png" alt="" onclick="ClearSessions()" />
                 </a>
                 <script>
@@ -43,15 +43,8 @@
                             <h2>USER NAME</h2>
                         </div>
 
-                        @using (Html.BeginForm("", "snap", FormMethod.Post))
+                        @using (Html.BeginForm("UpdatePassword", "Snap", FormMethod.Post))
                         {
-                            <div class="m-4">
-                                <label for="floatingTextarea">Username</label>
-                                @*<input type="text" name="" id="" class="form-control mt-1" />*@
-
-                                @Html.EditorFor(model => model.changePassword.username, new { htmlAttributes = new { @class = "form-control form-control-md" } })
-                                @Html.ValidationMessageFor(model => model.changePassword.username, "", new { @class = "text-danger" })
-                            </div>
                             <div class="m-4">
                                 <label for="floatingTextarea">Password</label>
                                 @*<input type="password" name="" id="" class="form-control mt-1" />*@
@@ -60,7 +53,7 @@
                                 @Html.ValidationMessageFor(model => model.changePassword.password, "", new { @class = "text-danger" })
                             </div>
                             <div class="m-4">
-                                <label for="floatingTextarea">Password</label>
+                                <label for="floatingTextarea">Confirm Password</label>
                                 @*<input type="password" name="" id="" class="form-control mt-1" />*@
 
                                 @Html.EditorFor(model => model.changePassword.confirmpassword, new { htmlAttributes = new { Type = "password", @class = "form-control form-control-md" } })
@@ -75,7 +68,7 @@
                                 </div>
                             </div>
                         }
-                        @using (Html.BeginForm("", "snap", FormMethod.Post))
+                        @using (Html.BeginForm("UpdateDetails", "Snap", FormMethod.Post))
                         {
                             <div class="m-4">
                                 <label for="floatingTextarea">Email Id</label>

@@ -37,5 +37,16 @@ namespace Snap_Bank.Services
             var user = (from u in snapDbContext.personalDetails where u.AccountNumber == accountnumber select u).FirstOrDefault();
             return map.MapExistingPersonalDetalisToRegisterViewModel(registerViewModel, user);
         }
+
+        public void UpdateDetails(int accountnumber, string gmail, string mobilenumber)
+        {
+            var temp = snapDbContext.personalDetails.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
+            if (temp != null)
+            {
+                temp.Gmail = gmail;
+                temp.MobileNumber = mobilenumber;
+                snapDbContext.SaveChanges();
+            }
+        }
     }
 }

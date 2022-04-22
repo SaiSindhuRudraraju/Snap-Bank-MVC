@@ -224,10 +224,6 @@ namespace Snap_Bank.Controllers
             return null;
         }
 
-        public ActionResult ForgetPassword()
-        {
-            return View();
-        }
         public ActionResult Support()
         {
             return View();
@@ -271,6 +267,64 @@ namespace Snap_Bank.Controllers
         public ActionResult PaymentUnsuccess()
         {
             return View();
+        }
+
+        public ActionResult UpdatePassword(SettingsModel settingsModel)
+        {
+            var user = (crediantials)Session["user"];
+            String username;
+            if (ModelState.IsValid)
+            {
+                if (user.AccountNumber != null)
+                {
+                    username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+                }
+                else
+                {
+                    username = user.username;
+                }
+                int count = accountTableService.GetNumberOfUsers(username);
+                if (count == 2)
+                {
+                    accountTableService.UpdatePassword(accountTableService.GetAccountNumber(username, "SavingsAccount"), settingsModel.changePassword.password);
+                    accountTableService.UpdatePassword(accountTableService.GetAccountNumber(username, "CurrentAccount"), settingsModel.changePassword.password);
+                }
+                else
+                {
+                    accountTableService.UpdatePassword(accountTableService.GetAccountNumber(username, accountTableService.getUserAccountType(username)), settingsModel.changePassword.password);
+                }
+            }
+            return RedirectToAction("Signin", "Login");
+        }
+
+        public ActionResult UpdateDetails(SettingsModel settingsModel)
+        {
+            var user = (crediantials)Session["user"];
+            String username;
+            if (ModelState.IsValid)
+            {
+                if (user.AccountNumber != null)
+                {
+                    username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+                }
+                else
+                {
+                    username = user.username;
+                }
+                int count = accountTableService.GetNumberOfUsers(username);
+                if (count == 2)
+                {
+                    personalDetailsService.UpdateDetails(accountTableService.GetAccountNumber(username, "SavingsAccount"), settingsModel.changedetailes.email, settingsModel.changedetailes.phonenumber);
+                    personalDetailsService.UpdateDetails(accountTableService.GetAccountNumber(username, "CurrentAccount"), settingsModel.changedetailes.email, settingsModel.changedetailes.phonenumber);
+                }
+                else
+                {
+                    personalDetailsService.UpdateDetails(accountTableService.GetAccountNumber(username, accountTableService.getUserAccountType(username)), settingsModel.changedetailes.email, settingsModel.changedetailes.phonenumber);
+                }
+            }
+            settingsModel.changedetailes = null;
+            settingsModel.changePassword = null;
+            return View("Settings");
         }
     }
 }
