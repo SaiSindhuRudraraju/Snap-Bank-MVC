@@ -37,7 +37,7 @@ namespace Snap_Bank.Services
         }
         public int GetAccountNumber(string username, string AccountType)
         {
-            if (AccountType == "SavingsAccount")
+            if (AccountType == "Savings")
             {
                 return snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == "SavingsAccount").FirstOrDefault().AccountNumber;
             }

@@ -37,11 +37,23 @@
                         ACCOUNT ACTIVITY
                     </div>
                     <div class="d-flex justify-content-center mt-5 h4">
-                        <input type="radio" class="m-2" name="account" id="account" value="Savings" onclick="GetTransferDetailes(this.value)">
+                        @using (Html.BeginForm("GetTransactions", "Snap", FormMethod.Post))
+                        {
+                            <input type="radio" class="m-2" name="account" id="account" value="Savings">
+                        }
                         SAVINGS ACCOUNT
-                        <input type="radio" class="m-2" name="account" id="account" value="Current" onclick="GetTransferDetailes(this.value)">
+                        @using (Html.BeginForm("GetTransactions", "Snap", FormMethod.Post))
+                        {
+                            <input type="radio" class="m-2" name="account" id="account" value="Current">
+                        }
                         CURRENT ACCOUNT
                     </div>
+
+                    <script>
+                        $('input[type=radio]').on('change', function () {
+                            $(this).closest("form").submit();
+                        });
+                    </script>
 
                     <div class="d-flex justify-content-around mt-5 row">
                         <div class="col-4">

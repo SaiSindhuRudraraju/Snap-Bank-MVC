@@ -244,7 +244,7 @@ namespace Snap_Bank.Controllers
             List<Transactions> list = transactionsService.Get(int.Parse(accountTableService.GetUserNumber(username)));
             return View(list);
         }
-        public ActionResult GetTransactions(String id)
+        public ActionResult GetTransactions(String account)
         {
             var user = (crediantials)Session["user"];
             String username;
@@ -256,7 +256,7 @@ namespace Snap_Bank.Controllers
             {
                 username = user.username;
             }
-            int AccountNumber = accountTableService.GetAccountNumber(username, id);
+            int AccountNumber = accountTableService.GetAccountNumber(username, account);
             List<Transactions> list = transactionsService.Get(AccountNumber);
             return View("AccountActivity", list);
         }
