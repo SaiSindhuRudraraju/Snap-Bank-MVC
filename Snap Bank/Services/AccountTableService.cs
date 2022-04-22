@@ -33,11 +33,14 @@ namespace Snap_Bank.Services
         }
         public int GetAccountNumberByAccountType(string username, string AccountType)
         {
-            return snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == AccountType).FirstOrDefault().AccountNumber;
+            var user = snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == AccountType).FirstOrDefault();
+            if(user!=null)
+            return user.AccountNumber;
+            return -1;
         }
         public int GetAccountNumber(string username, string AccountType)
         {
-            if (AccountType == "Savings")
+            if (AccountType == "SavingsAccount")
             {
                 return snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == "SavingsAccount").FirstOrDefault().AccountNumber;
             }
@@ -48,30 +51,40 @@ namespace Snap_Bank.Services
         }
         public bool TransferAmountFromTo(SelfAccountTransferViewModel selfAccountViewModel, int fromAccount, int toAccount)
         {
-            decimal totalamount = snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount;
-            decimal transferamount = selfAccountViewModel.AmountToTransfer;
             bool isTransactionSuccessFull = false;
-            if (totalamount > transferamount)
+            if (fromAccount != -1 && toAccount != -1)
             {
-                using (var tran = snapDbContext.Database.BeginTransaction())
+                decimal totalamount = snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount;
+                decimal transferamount = selfAccountViewModel.AmountToTransfer;
+                if (totalamount > transferamount)
                 {
-                    try
+                    using (var tran = snapDbContext.Database.BeginTransaction())
                     {
-                        snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount = (int)(totalamount-transferamount);
-                        snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount = (int)(snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount+transferamount);
-                        var transactiondetailes1 = map.MapTrannsactionViewModels(fromAccount, toAccount, transferamount, "Debit", true);
-                        snapDbContext.transactions.Add(transactiondetailes1);
-                        var transactiondetailes2 = map.MapTrannsactionViewModels(toAccount, fromAccount, transferamount, "credit", true);
-                        snapDbContext.transactions.Add(transactiondetailes2);
-                        snapDbContext.SaveChanges();
-                        isTransactionSuccessFull = true;
-                        tran.Commit();
+                        try
+                        {
+                            if (fromAccount != -1 && toAccount != -1)
+                            {
+                                snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount = (int)(totalamount - transferamount);
+                                snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount = (int)(snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount + transferamount);
+                                var transactiondetailes1 = map.MapTrannsactionViewModels(fromAccount, toAccount, transferamount, "Debit", true);
+                                snapDbContext.transactions.Add(transactiondetailes1);
+                                var transactiondetailes2 = map.MapTrannsactionViewModels(toAccount, fromAccount, transferamount, "credit", true);
+                                snapDbContext.transactions.Add(transactiondetailes2);
+                                snapDbContext.SaveChanges();
+                                isTransactionSuccessFull = true;
+                                tran.Commit();
+                            }
+                            else
+                            {
+                                isTransactionSuccessFull = false;
+                            }
 
-                    }
-                    catch (Exception ex)
-                    {
-                        isTransactionSuccessFull=false;
-                        tran.Rollback();
+                        }
+                        catch (Exception ex)
+                        {
+                            isTransactionSuccessFull = false;
+                            tran.Rollback();
+                        }
                     }
                 }
             }
@@ -81,30 +94,33 @@ namespace Snap_Bank.Services
         }
         public bool TransferAmountFromTo(DifferentAccountTransferModel differentAccountTransferModel, int fromAccount, int toAccount)
         {
-            decimal totalamount = snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount;
-            decimal transferamount = differentAccountTransferModel.AmountToTransfer;
             bool isTransactionSuccessFull = false;
-            if (totalamount > transferamount)
+            if (fromAccount != -1 && toAccount != -1)
             {
-                using (var tran = snapDbContext.Database.BeginTransaction())
+                decimal totalamount = snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount;
+                decimal transferamount = differentAccountTransferModel.AmountToTransfer;
+                if (totalamount > transferamount)
                 {
-                    try
+                    using (var tran = snapDbContext.Database.BeginTransaction())
                     {
-                        snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount = (int)(totalamount-transferamount);
-                        snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount = (int)(snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount+transferamount);
-                        var transactiondetailes1 = map.MapTrannsactionViewModels(fromAccount, toAccount, transferamount, "Debit", true);
-                        snapDbContext.transactions.Add(transactiondetailes1);
-                        var transactiondetailes2 = map.MapTrannsactionViewModels(toAccount, fromAccount, transferamount, "credit", true);
-                        snapDbContext.transactions.Add(transactiondetailes2);
-                        snapDbContext.SaveChanges();
-                        isTransactionSuccessFull = true;
-                        tran.Commit();
+                        try
+                        {
+                            snapDbContext.AccountTables.Where(s => s.AccountNumber == fromAccount).FirstOrDefault().Amount = (int)(totalamount - transferamount);
+                            snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount = (int)(snapDbContext.AccountTables.Where(s => s.AccountNumber == toAccount).FirstOrDefault().Amount + transferamount);
+                            var transactiondetailes1 = map.MapTrannsactionViewModels(fromAccount, toAccount, transferamount, "Debit", true);
+                            snapDbContext.transactions.Add(transactiondetailes1);
+                            var transactiondetailes2 = map.MapTrannsactionViewModels(toAccount, fromAccount, transferamount, "credit", true);
+                            snapDbContext.transactions.Add(transactiondetailes2);
+                            snapDbContext.SaveChanges();
+                            isTransactionSuccessFull = true;
+                            tran.Commit();
 
-                    }
-                    catch (Exception ex)
-                    {
-                        isTransactionSuccessFull=false;
-                        tran.Rollback();
+                        }
+                        catch (Exception ex)
+                        {
+                            isTransactionSuccessFull = false;
+                            tran.Rollback();
+                        }
                     }
                 }
             }
@@ -169,7 +185,11 @@ namespace Snap_Bank.Services
         public String GetUserNumber(string username)
         {
             var user = (from u in snapDbContext.AccountTables where u.UserName == username select u).FirstOrDefault();
-            return user.AccountNumber.ToString();
+            if (user != null)
+            {
+                return user.AccountNumber.ToString();
+            }
+            return null;
         }
         public RegisterViewModel GetUserDetails(int accountnumber, RegisterViewModel registerViewModel)
         {

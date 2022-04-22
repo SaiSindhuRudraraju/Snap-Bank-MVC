@@ -322,9 +322,7 @@ namespace Snap_Bank.Controllers
                     personalDetailsService.UpdateDetails(accountTableService.GetAccountNumber(username, accountTableService.getUserAccountType(username)), settingsModel.changedetailes.email, settingsModel.changedetailes.phonenumber);
                 }
             }
-            settingsModel.changedetailes = null;
-            settingsModel.changePassword = null;
-            return View("Settings");
+            return View("Settings",settingsModel);
         }
     }
 }

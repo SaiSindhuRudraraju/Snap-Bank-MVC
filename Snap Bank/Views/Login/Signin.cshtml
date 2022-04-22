@@ -26,7 +26,7 @@
                 <!-- PIN -->
                 <div class="mb-3">
                     @*<input type="password" class="form-control" placeholder="six digit pin" />*@
-                    @Html.EditorFor(model => model.pin, new { htmlAttributes = new { @type = "password", @class = "form-control form-control-md", @maxlength = 4, @placeholder = "six digit pin" } })
+                    @Html.EditorFor(model => model.pin, new { htmlAttributes = new { @type = "password", @class = "form-control form-control-md", @maxlength = 4, @placeholder = "four digit pin" } })
                     @Html.ValidationMessageFor(model => model.pin, "", new { @class = "text-danger" })
                 </div>
                 <div class="my-4" style="justify-content: center">

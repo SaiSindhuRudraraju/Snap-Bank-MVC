@@ -153,7 +153,7 @@ namespace Snap_Bank.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (forgetPasswordModel.securityQuestions != null)
+                if (forgetPasswordModel.securityQuestions != null && accountTableService.GetUserNumber(forgetPasswordModel.securityQuestions.username)!=null)
                 {
                     forgetPasswordModel.securityQuestions.isMatched = securityQuestionsService.VerifyAnswers(forgetPasswordModel.securityQuestions, int.Parse(accountTableService.GetUserNumber(forgetPasswordModel.securityQuestions.username)));
                     if (forgetPasswordModel.securityQuestions.isMatched)
@@ -167,6 +167,11 @@ namespace Snap_Bank.Controllers
                         ModelState.AddModelError("securityQuestions.username", "Your UserName and Answers doesnot match!. Enter Correct Answers");
                         return View(forgetPasswordModel);
                     }
+                }
+                else if(forgetPasswordModel.securityQuestions != null)
+                {
+                    ModelState.AddModelError("securityQuestions.username", "Your UserName doesnot Exist!!. Enter Correct UserName");
+                    return View(forgetPasswordModel);
                 }
             }
             return View();
