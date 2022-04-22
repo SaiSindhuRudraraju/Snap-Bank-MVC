@@ -16,5 +16,6 @@ namespace Snap_Bank.Services
 
         bool Put(Transactions transaction);
         List<Transactions> Get(int AccountNumber);
+        List<Transactions> GetTransactionsByName(int AccountNumber, DateTime from, DateTime to);
     }
 }

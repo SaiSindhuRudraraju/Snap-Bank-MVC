@@ -244,9 +244,11 @@ namespace Snap_Bank.Controllers
             List<Transactions> list = transactionsService.Get(int.Parse(accountTableService.GetUserNumber(username)));
             return View(list);
         }
-        public ActionResult GetTransactions(String account)
+        public ActionResult GetTransactions(String account,String transactionrange,String fromdate,String todate)
         {
             var user = (crediantials)Session["user"];
+            DateTime totansactiondate = DateTime.Today;
+            DateTime fromtansactiondate = DateTime.Today;
             String username;
             if (user.AccountNumber !=null)
             {
@@ -256,10 +258,33 @@ namespace Snap_Bank.Controllers
             {
                 username = user.username;
             }
-            int AccountNumber = accountTableService.GetAccountNumber(username, account);
-            List<Transactions> list = transactionsService.Get(AccountNumber);
-            return View("AccountActivity", list);
+            if(transactionrange!=null && account!=null)
+            {
+                int AccountNumber = accountTableService.GetAccountNumber(username, account);
+
+                if (transactionrange.Equals("lastweek"))
+                {
+                    fromtansactiondate = DateTime.Now.AddDays(-7);
+                }
+                else if (transactionrange.Equals("last2weeks"))
+                {
+                    fromtansactiondate = DateTime.Now.AddDays(-14);
+                }
+                else if (transactionrange.Equals("lastmonth"))
+                {
+                    fromtansactiondate = DateTime.Now.AddMonths(-1);
+                }
+                else if (transactionrange.Equals("coustum") && fromdate != null && todate != null)
+                {
+                    totansactiondate = Convert.ToDateTime(todate);
+                    fromtansactiondate = Convert.ToDateTime(fromdate);
+                }
+                List<Transactions> list = transactionsService.GetTransactionsByName(AccountNumber, fromtansactiondate, totansactiondate);
+                return View("AccountActivity", list);
+            }
+            return RedirectToAction("AccountActivity");
         }
+        
         public ActionResult PaymentSuccess()
         {
             return View();
@@ -324,5 +349,6 @@ namespace Snap_Bank.Controllers
             }
             return View("Settings",settingsModel);
         }
+        
     }
 }

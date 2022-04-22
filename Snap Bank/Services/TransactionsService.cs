@@ -20,6 +20,11 @@ namespace Snap_Bank.Services
             var list = snapDbContext.transactions.Where(s => s.AccountNumber == AccountNumber).ToList();
             return list;
         }
+        public List<Transactions> GetTransactionsByName(int AccountNumber,DateTime from,DateTime to)
+        {
+            var list = snapDbContext.transactions.Where(s=>s.AccountNumber == AccountNumber && s.TransactionDate  <= to && s.TransactionDate >= from ).ToList();
+            return list;
+        }
         public List<Transactions> GetTransferDetailesByType(int AccountNumber, String AccountType)
         {
             var list = snapDbContext.transactions.Where(s => s.AccountNumber == AccountNumber).ToList();
