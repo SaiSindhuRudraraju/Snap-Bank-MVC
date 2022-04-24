@@ -34,8 +34,8 @@ namespace Snap_Bank.Services
         public int GetAccountNumberByAccountType(string username, string AccountType)
         {
             var user = snapDbContext.AccountTables.Where(c => c.UserName == username && c.AccountType == AccountType).FirstOrDefault();
-            if(user!=null)
-            return user.AccountNumber;
+            if (user!=null)
+                return user.AccountNumber;
             return -1;
         }
         public int GetAccountNumber(string username, string AccountType)
@@ -247,7 +247,7 @@ namespace Snap_Bank.Services
             var data = snapDbContext.AccountTables.Where(s => s.UserName == user.UserName).ToList();
             return GetUserByName(user.UserName);
         }
-        public void UpdatePassword(int accountnumber,string newPassword)
+        public void UpdatePassword(int accountnumber, string newPassword)
         {
             var temp = snapDbContext.AccountTables.Where(s => s.AccountNumber == accountnumber).FirstOrDefault();
             if (temp != null)

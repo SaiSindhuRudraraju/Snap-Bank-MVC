@@ -61,11 +61,18 @@
 
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-sd-12">
+                                <div class="col-6 col-md-6 col-sd-12">
                                     <div class="mt-3">
                                         <span style="font-weight: bold; color: brown; margin-top: 10px">Enter Amount</span>
                                         @Html.EditorFor(model => model.selfAccountViewModel.AmountToTransfer, new { htmlAttributes = new { type = "Number", @class = "form-control form-control-md" } })
                                         @Html.ValidationMessageFor(model => model.selfAccountViewModel.AmountToTransfer, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 col-sd-12">
+                                    <div class="mt-3">
+                                        <label for="floatingTextarea">Enter four-Digit Pin </label>
+                                        @Html.EditorFor(model => model.selfAccountViewModel.pin, new { htmlAttributes = new { type = "", @Value = "", @maxlength = 4, @class = "form-control form-control-md" } })
+                                        @Html.ValidationMessageFor(model => model.selfAccountViewModel.pin, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -100,12 +107,32 @@
                                             @Html.DropDownListFor(model => model.differentAccountTransferModel.CountryName, new SelectList(Enum.GetValues(typeof(Snap_Bank.ViewModel.CountryName))), "Choose Country", new { @onchange = "setConversionRate(this.value)", @class = "form-select form-control form-control-md" })
                                             <script>
                                                 function setConversionRate(selected) {
-                                                    if (selected == "UnitedStatesOfAmerica")
-                                                        document.getElementById("conversionRate").value = 1.30;
-                                                    else if (selected == "UnitedKingdom")
-                                                        document.getElementById("conversionRate").value = 1;
-                                                    else if (selected == "Europe")
-                                                        document.getElementById("conversionRate").value = 1.20;
+                                                    if (selected == "UnitedStatesOfAmerica") {
+                                                         getConversionRate("USD");
+
+                                                    }
+                                                    else if (selected == "UnitedKingdom") {
+                                                        getConversionRate("GBP");
+
+
+                                                    }
+                                                    else if (selected == "Europe") {
+                                                        getConversionRate("EUR");
+
+                                                    }
+                                                }
+                                                function getConversionRate(co) {
+                                                    let rate;
+                                                    $.ajax({
+                                                        url: '@Url.Action("GetConversionRate", "Snap")',
+                                                        data: { country: co },
+                                                        success: function (data) {
+                                                            document.getElementById('conversionRate').value = data;
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            console.log(xhr);
+                                                        }
+                                                    });
                                                 }
                                             </script>
                                         </div>

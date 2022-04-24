@@ -5,6 +5,7 @@ using Snap_Bank.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -244,7 +245,7 @@ namespace Snap_Bank.Controllers
             List<Transactions> list = transactionsService.Get(int.Parse(accountTableService.GetUserNumber(username)));
             return View(list);
         }
-        public ActionResult GetTransactions(String account,String transactionrange,String fromdate,String todate)
+        public ActionResult GetTransactions(String account, String transactionrange, String fromdate, String todate)
         {
             var user = (crediantials)Session["user"];
             DateTime totansactiondate = DateTime.Today;
@@ -258,7 +259,7 @@ namespace Snap_Bank.Controllers
             {
                 username = user.username;
             }
-            if(transactionrange!=null && account!=null)
+            if (transactionrange!=null && account!=null)
             {
                 int AccountNumber = accountTableService.GetAccountNumber(username, account);
 
@@ -284,7 +285,7 @@ namespace Snap_Bank.Controllers
             }
             return RedirectToAction("AccountActivity");
         }
-        
+
         public ActionResult PaymentSuccess()
         {
             return View();
@@ -321,7 +322,13 @@ namespace Snap_Bank.Controllers
             }
             return RedirectToAction("Signin", "Login");
         }
+        public async Task<decimal> GetConversionRate(string country)
+        {
+            ApiServices apiservices = new ApiServices();
 
+            decimal conversionrate = await apiservices.GetConversionRate(country);
+            return conversionrate;
+        }
         public ActionResult UpdateDetails(SettingsModel settingsModel)
         {
             var user = (crediantials)Session["user"];
@@ -347,8 +354,8 @@ namespace Snap_Bank.Controllers
                     personalDetailsService.UpdateDetails(accountTableService.GetAccountNumber(username, accountTableService.getUserAccountType(username)), settingsModel.changedetailes.email, settingsModel.changedetailes.phonenumber);
                 }
             }
-            return View("Settings",settingsModel);
+            return View("Settings", settingsModel);
         }
-        
+
     }
 }

@@ -3,6 +3,7 @@ using Snap_Bank.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -94,7 +95,7 @@ namespace Snap_Bank.Controllers
         }
 
         //When Clicked Register option for registering new User in signin page(First Account Creation)
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
             Random rnd = new Random();
@@ -106,10 +107,13 @@ namespace Snap_Bank.Controllers
             return View(registerViewModel);
         }
 
+
+
         //For A New Users First Accounts Details When Clicked Next in Register page To goto Questions Page
         [HttpPost]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
+
             if (!accountTableService.CheckUserName(registerViewModel.UserName))
             {
                 registerViewModel.CompleteSortCode = int.Parse(registerViewModel.SortCode1.ToString() + registerViewModel.SortCode2.ToString() + registerViewModel.SortCode3.ToString());
@@ -168,7 +172,7 @@ namespace Snap_Bank.Controllers
                         return View(forgetPasswordModel);
                     }
                 }
-                else if(forgetPasswordModel.securityQuestions != null)
+                else if (forgetPasswordModel.securityQuestions != null)
                 {
                     ModelState.AddModelError("securityQuestions.username", "Your UserName doesnot Exist!!. Enter Correct UserName");
                     return View(forgetPasswordModel);
@@ -180,7 +184,7 @@ namespace Snap_Bank.Controllers
         public ActionResult ChangePassword(ForgetPasswordModel forgetPasswordModel)
         {
             int count = accountTableService.GetNumberOfUsers(forgetPasswordModel.newPasswords.username);
-            if(count == 2)
+            if (count == 2)
             {
                 accountTableService.UpdatePassword(accountTableService.GetAccountNumber(forgetPasswordModel.newPasswords.username, "SavingsAccount"), forgetPasswordModel.newPasswords.password);
                 accountTableService.UpdatePassword(accountTableService.GetAccountNumber(forgetPasswordModel.newPasswords.username, "CurrentAccount"), forgetPasswordModel.newPasswords.password);

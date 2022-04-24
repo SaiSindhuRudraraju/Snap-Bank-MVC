@@ -15,6 +15,7 @@ namespace Snap_Bank.ViewModel
         public String FromAccountType { get; set; }
         public String ToAccountType { get; set; }
         public Decimal AmountToTransfer { get; set; }
+        public int pin { get; set; }
     }
     public class DifferentAccountTransferModel
     {
