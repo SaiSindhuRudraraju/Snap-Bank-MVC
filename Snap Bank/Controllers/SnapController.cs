@@ -67,8 +67,6 @@ namespace Snap_Bank.Controllers
 
             ViewBag.CurrentAccountBalance = accountTableService.GetCurrentAccountAmount(username);
             ViewBag.SavingsAccountBalance = accountTableService.GetSavingAccountAmount(username);
-
-
             return View(fundTransferViewModel);
         }
 
@@ -87,40 +85,55 @@ namespace Snap_Bank.Controllers
                 {
                     username = user.username;
                 }
-                var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.selfAccountViewModel.FromAccountType);
-                var toAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.selfAccountViewModel.ToAccountType);
-                bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.selfAccountViewModel, fromAccountNumber, toAccountNumber);
-                if (status ==true)
-                    return Redirect("PaymentSuccess");
+                if (accountTableService.ValidatePin(username, fundTransferViewModel.selfAccountViewModel.pin))
+                {
+                    var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.selfAccountViewModel.FromAccountType);
+                    var toAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.selfAccountViewModel.ToAccountType);
+                    bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.selfAccountViewModel, fromAccountNumber, toAccountNumber);
+                    if (status == true)
+                        return Redirect("PaymentSuccess");
+                    else
+                        return Redirect("PaymentUnsuccess");
+                }
                 else
-                    return Redirect("PaymentUnsuccess");
+                {
+                    return Redirect("WrongPin");
+                }
             }
-            return View(fundTransferViewModel);
+            return RedirectToAction("FundTransfer",fundTransferViewModel);
         }
 
         [HttpPost]
         public ActionResult DifferentAccounFundTransfer(FundTransferViewModel fundTransferViewModel)
         {
-
-            var user = (crediantials)Session["user"];
-            var username = "";
-            if (user.username == null)
+            if (fundTransferViewModel.differentAccountTransferModel.AccountNumber.ToString() != null && fundTransferViewModel.differentAccountTransferModel.FromAccountType != null && fundTransferViewModel.differentAccountTransferModel.CountryName != null && fundTransferViewModel.differentAccountTransferModel.AccountHolder != null)
             {
-                username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+                var user = (crediantials)Session["user"];
+                var username = "";
+                if (user.username == null)
+                {
+                    username = accountTableService.GetUserName(int.Parse(user.AccountNumber));
+                }
+                else
+                {
+                    username = user.username;
+                }
+                if (accountTableService.ValidatePin(username, fundTransferViewModel.differentAccountTransferModel.pin))
+                {
+                    var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.differentAccountTransferModel.FromAccountType);
+                    var toAccountNumber = fundTransferViewModel.differentAccountTransferModel.AccountNumber;
+                    bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.differentAccountTransferModel, fromAccountNumber, (int)toAccountNumber);
+                    if (status == true)
+                        return Redirect("PaymentSuccess");
+                    else
+                        return Redirect("PaymentUnsuccess");
+                }
+                else
+                {
+                    return Redirect("WrongPin");
+                }
             }
-            else
-            {
-                username = user.username;
-            }
-            var fromAccountNumber = accountTableService.GetAccountNumberByAccountType(username, fundTransferViewModel.differentAccountTransferModel.FromAccountType);
-            var toAccountNumber = fundTransferViewModel.differentAccountTransferModel.AccountNumber;
-            bool status = accountTableService.TransferAmountFromTo(fundTransferViewModel.differentAccountTransferModel, fromAccountNumber, (int)toAccountNumber);
-            if (status ==true)
-                return Redirect("PaymentSuccess");
-            else
-                return Redirect("PaymentUnsuccess");
-
-            return View(fundTransferViewModel);
+            return RedirectToAction("FundTransfer", fundTransferViewModel);
         }
 
         //When Clicked Settings button in Home Page
@@ -291,6 +304,10 @@ namespace Snap_Bank.Controllers
             return View();
         }
         public ActionResult PaymentUnsuccess()
+        {
+            return View();
+        }
+        public ActionResult WrongPin()
         {
             return View();
         }

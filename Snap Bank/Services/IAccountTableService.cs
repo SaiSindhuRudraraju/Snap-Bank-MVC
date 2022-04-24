@@ -14,6 +14,8 @@ namespace Snap_Bank.Services
 
         void ValidateAccountType(RegisterViewModel registerViewModel);
 
+        bool ValidatePin(String username, int pin);
+
         bool CheckUserName(String username);
 
         bool CheckUserPassword(String username, String password);

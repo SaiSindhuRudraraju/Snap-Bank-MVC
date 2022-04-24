@@ -147,6 +147,20 @@ namespace Snap_Bank.Services
             var records = snapDbContext.AccountTables.ToList();
             var UserRecords = records.Where(c => c.UserName.Contains(registerViewModel.UserName));
         }
+
+        public bool ValidatePin(String username, int pin)
+        {
+            var user = snapDbContext.AccountTables.Where(c => c.UserName == username).FirstOrDefault();
+            if(user.Pin == pin)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool CheckUserName(String username)
         {
             var check = snapDbContext.AccountTables.ToList();
