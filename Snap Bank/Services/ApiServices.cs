@@ -32,7 +32,7 @@ namespace Snap_Bank.Services
     {
         public async Task<decimal> GetConversionRate(String country)
         {
-            var url = "http://data.fixer.io/api/latest?access_key=dd11ea15f525ab001f3cd32df54e7ee5";
+            var url = "http://data.fixer.io/api/latest?access_key=ba0c9e66196edcb51488611d288eb7d3";
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(url);
 

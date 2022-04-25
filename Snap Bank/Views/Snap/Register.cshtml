@@ -55,12 +55,12 @@
                         <div class="row">
                             <div class="col-md-6 col-sd-12">
                                 <label>Email</label>
-                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { type = "text", @readonly = "readonly",@class = "form-control form-control-md" } })
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-md-6 col-sd-12">
                                 <label>Mobile Number</label>
-                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { type = "number", @class = "form-control form-control-md" } })
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new {@readonly = "readonly",type = "number", @class = "form-control form-control-md" } })
                                 @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -117,12 +117,15 @@
                             </div>
                             <div class="col-md-3 col-sd-12">
                                 <label>Password</label>
-                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @{
+                                    string password = Model.Password;
+                                }
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control form-control-md" ,@value = password} })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-md-3 col-sd-12">
                                 <label>Confirm Password</label>
-                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control form-control-md" } })
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control form-control-md", @value = password } })
                                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -130,7 +133,7 @@
                         <div class="row">
                             <div class="col-md-3 col-sd-12">
                                 <label>Pin</label>
-                                @Html.EditorFor(model => model.Pin, new { htmlAttributes = new { @readonly = "readonly", type = "", @maxlength = 4, @class = "form-control form-control-md" } })
+                                @Html.EditorFor(model => model.Pin, new { htmlAttributes = new {type = "", @maxlength = 4, @class = "form-control form-control-md" } })
                                 @Html.ValidationMessageFor(model => model.Pin, "", new { @class = "text-danger" })
                             </div>
 
